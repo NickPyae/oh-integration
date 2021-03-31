@@ -1,0 +1,66 @@
+name: "Random-Temperature-Generator"
+manufacturer: "Dell Technologies"
+model: "Device-Random-Temperature-01"
+labels:
+- "device-random-temperature-example"
+description: "Example of Device-Random-Temperature"
+
+deviceResources:
+-
+  name: "RandomTemperature"
+  description: "Generate random temperature value"
+  properties:
+    value:
+      { type: "Int32", readWrite: "R", minimum: "50", maximum: "200", defaultValue: "100" }
+    units:
+      { type: "String", readWrite: "R", defaultValue: "random temperature value" }
+-
+  name: "Min_Temperature"
+  description: "Minimum of random temperature value"
+  properties:
+    value:
+      { type: "Int32", readWrite: "R", minimum: "50", maximum: "200", defaultValue: "50" }
+    units:
+      { type: "String", readWrite: "R", defaultValue: "random temperature minimum value" }
+-
+  name: "Max_Temperature"
+  description: "Maximum of random temperature value"
+  properties:
+    value:
+      { type: "Int32", readWrite: "R", minimum: "50", maximum: "200", defaultValue: "200" }
+    units:
+      { type: "String", readWrite: "R", defaultValue: "random temperature maximum value" }
+
+deviceCommands:
+-
+  name: "GenerateRandomTemperature"
+  get:
+  - { operation: "get", deviceResource: "RandomTemperature" }
+  set:
+  - { operation: "set", deviceResource: "Min_Temperature", parameter: "50" }
+  - { operation: "set", deviceResource: "Max_Temperature", parameter: "200" }
+
+coreCommands:
+-
+  name: "GenerateRandomTemperature"
+  get:
+    path: "/api/v1/device/{deviceId}/GenerateRandomTemperature"
+    responses:
+    -
+      code: "200"
+      description: ""
+      expectedValues: ["RandomTemperature"]
+    -
+      code: "503"
+      description: "service unavailable"
+      expectedValues: []
+  put:
+    path: "/api/v1/device/{deviceId}/GenerateRandomTemperature"
+    parameterNames: ["Min_Temperature","Max_Temperature"]
+    responses:
+      -
+        code: "200"
+        description: ""
+      -
+        code: "503"
+        description: "service unavailable"
