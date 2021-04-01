@@ -16,6 +16,5 @@
 .idea/
 vendor/
 glide.lock
-go.sum
 coverage.out
 VERSION
