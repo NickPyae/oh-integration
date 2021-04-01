@@ -1,3 +1,6 @@
+# Copyright 2021 Dell Inc, or its subsidiaries.
+# SPDX-License-Identifier: Apache-2.0
+
 .PHONY: build test clean prepare update docker
 
 GO = CGO_ENABLED=0 GO111MODULE=on go
@@ -24,8 +27,6 @@ test:
         $(GO) vet ./...
         gofmt -l .
         [ "`gofmt -l .`" = "" ]
-#       ./bin/test-attribution-txt.sh
-#       ./bin/test-go-mod-tidy.sh
 
 clean:
         rm -f $(MICROSERVICES)

@@ -1,11 +1,6 @@
-// -*- Mode: Go; indent-tabs-mode: t -*-
-//
-// Copyright (C) 2018-2020 IOTech Ltd
-//
+// Copyright 2021 Dell Inc, or its subsidiaries.
 // SPDX-License-Identifier: Apache-2.0
 
-// This package provides a implementation of a ProtocolDriver interface.
-//
 package driver
 
 import (
