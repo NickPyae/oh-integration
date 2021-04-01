@@ -17,25 +17,25 @@ GIT_SHA=$(shell git rev-parse HEAD)
 GOFLAGS=-ldflags "-X device-random-temperature.Version=$(VERSION)"
 
 build: $(MICROSERVICES)
-        $(GO) build ./...
+	$(GO) build ./...
 
 cmd/device-random-temperature:
-        $(GO) build $(GOFLAGS) -o $@ ./cmd
+	$(GO) build $(GOFLAGS) -o $@ ./cmd
 
 test:
-        $(GO) test ./... -coverprofile=coverage.out
-        $(GO) vet ./...
-        gofmt -l .
-        [ "`gofmt -l .`" = "" ]
+	$(GO) test ./... -coverprofile=coverage.out
+	$(GO) vet ./...
+	gofmt -l .
+	[ "`gofmt -l .`" = "" ]
 
 clean:
-        rm -f $(MICROSERVICES)
+	rm -f $(MICROSERVICES)
 
 docker: $(DOCKERS)
 
 device_random_temperature_go:
-        docker build \
-                --label "git_sha=$(GIT_SHA)" \
-                -t device-random-temperature-go:$(GIT_SHA) \
-                -t device-random-temperature-go:$(VERSION)-dev \
-                .
+	docker build \
+		--label "git_sha=$(GIT_SHA)" \
+		-t device-random-temperature-go:$(GIT_SHA) \
+		-t device-random-temperature-go:$(VERSION)-dev \
+		.
