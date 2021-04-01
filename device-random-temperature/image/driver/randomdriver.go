@@ -63,6 +63,7 @@ func (d *RandomDriver) HandleReadCommands(deviceName string, protocols map[strin
         return res, nil
 }
 
+//nolint
 func (d *RandomDriver) retrieveRandomDevice(deviceName string) (rdv *randomDevice) {
         rd, ok := d.randomDevices.LoadOrStore(deviceName, newRandomDevice())
         if rdv, ok = rd.(*randomDevice); !ok {
