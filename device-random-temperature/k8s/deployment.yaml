@@ -8,7 +8,6 @@ metadata:
   labels:
     app.kubernetes.io/app: device-random-temperature
     app.kubernetes.io/part-of: edgex-foundry
-  namespace: default
 spec:
   replicas: 1
   selector:
