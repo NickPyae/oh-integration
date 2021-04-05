@@ -1,0 +1,61 @@
+# Copyright 2021 Dell Inc, or its subsidiaries.
+# SPDX-License-Identifier: Apache-2.0
+
+[Writable]
+LogLevel = 'INFO'
+
+[Service]
+BootTimeout = 30000
+CheckInterval = '10s'
+Host = 'localhost'
+ServerBindAddr = ''  # blank value defaults to Service.Host value
+Port = 49988
+Protocol = 'http'
+StartupMsg = 'device temperature random started'
+Timeout = 5000
+ConnectRetries = 10
+Labels = []
+EnableAsyncReadings = true
+AsyncBufferSize = 16
+
+[Registry]
+Host = 'localhost'
+Port = 8500
+Type = 'consul'
+
+[Clients]
+  [Clients.Data]
+  Protocol = 'http'
+  Host = 'localhost'
+  Port = 48080
+
+  [Clients.Metadata]
+  Protocol = 'http'
+  Host = 'localhost'
+  Port = 48081
+
+[Device]
+  DataTransform = true
+  InitCmd = ''
+  InitCmdArgs = ''
+  MaxCmdOps = 128
+  MaxCmdValueLen = 256
+  RemoveCmd = ''
+  RemoveCmdArgs = ''
+  ProfilesDir = './res'
+  UpdateLastConnected = false
+
+# Pre-define Devices
+[[DeviceList]]
+  Name = 'Random-Temperature-Generator01'
+  Profile = 'Random-Temperature-Generator'
+  Description = 'Example of Device Random Temperature'
+  Labels = [ 'device-random-temperature-example' ]
+  [DeviceList.Protocols]
+    [DeviceList.Protocols.other]
+    Address = 'simple01'
+    Port = '300'
+  [[DeviceList.AutoEvents]]
+    Frequency = '1s'
+    OnChange = false
+    Resource = 'GenerateRandomTemperature'

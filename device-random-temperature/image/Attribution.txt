@@ -1,0 +1,3 @@
+Note: using Attribution.txt from https://github.com/edgexfoundry/device-random/blob/master/Attribution.txt, 
+as this project was heavily referenced to create boilerplate for our project.
+
