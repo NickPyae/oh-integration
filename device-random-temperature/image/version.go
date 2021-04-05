@@ -3,5 +3,5 @@
 
 package device_random_temperature
 
-// Global version for device-sdk-go
+// Version for device-sdk-go
 var Version string = "to be replaced by makefile"

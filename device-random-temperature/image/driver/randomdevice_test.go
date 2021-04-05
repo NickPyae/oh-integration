@@ -4,23 +4,22 @@
 package driver
 
 import (
-        "testing"
+	"testing"
 
-        "github.com/edgexfoundry/device-sdk-go/pkg/models"
+	"github.com/edgexfoundry/device-sdk-go/pkg/models"
 )
 
 var device = newRandomDevice()
 
-
 func TestValue_Int32(t *testing.T) {
-        valueType := models.Int32
+	valueType := models.Int32
 
-        val, err := device.value(valueType)
+	val, err := device.value(valueType)
 
-        if err != nil {
-                t.Fatalf("Failed to generate random %v value", valueType)
-        }
-        if val <= defMinTemperature || val >= defMaxTemperature {                            
-                t.Fatalf("Unexpected test result. %v is not in %v value range", val, valueType)
-        }
+	if err != nil {
+		t.Fatalf("Failed to generate random %v value", valueType)
+	}
+	if val <= defMinTemperature || val >= defMaxTemperature {
+		t.Fatalf("Unexpected test result. %v is not in %v value range", val, valueType)
+	}
 }

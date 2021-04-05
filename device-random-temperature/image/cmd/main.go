@@ -4,16 +4,17 @@
 package main
 
 import (
-        "device-random-temperature"
-        "device-random-temperature/driver"
-        "github.com/edgexfoundry/device-sdk-go/pkg/startup"
+	device_random_temperature "device-random-temperature"
+	"device-random-temperature/driver"
+
+	"github.com/edgexfoundry/device-sdk-go/pkg/startup"
 )
 
 const (
-        serviceName string = "device-random-temperature"
+	serviceName string = "device-random-temperature"
 )
 
 func main() {
-        d := driver.NewProtocolDriver()
-        startup.Bootstrap(serviceName, device_random_temperature.Version, d)
+	d := driver.NewProtocolDriver()
+	startup.Bootstrap(serviceName, device_random_temperature.Version, d)
 }
