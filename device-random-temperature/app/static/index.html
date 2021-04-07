@@ -1,0 +1,70 @@
+<!-- Copyright 2021 Dell Inc, or its subsidiaries.
+     SPDX-License-Identifier: Apache-2.0 -->
+
+<!doctype html>
+<html lang="en">
+    <head>
+        <script src="jquery-3.6.0.min.js"></script>
+
+        <meta charset="utf-8">
+        <title>Demo app</title>
+    </head>
+
+    <body>
+
+        <center>
+            <h2>Displaying latest 20 temperature readings</h2>
+            <table>
+                <td height=300px width=300px>
+                    <p><b>Min Temperature (Fahrenheit)</b></p>
+                    <span id="minTemperature">50</span>
+                </td>
+                <td height=300px width=300px>
+                    <p><b>Max Temperature (Fahrenheit)</b></p>
+                    <span id="maxTemperature">200</span>
+                </td>
+            </table>
+
+            <table id="tblReadings">
+                <thead>
+                    <th>Created</th>
+                    <th>Temperature (Fahrenheit)</th>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+
+        </center>
+
+        <script>
+            (function(){
+                $.getJSON(
+                    "/addDeviceReading",
+                    function(data) {
+                        console.log(data)
+                    }
+                );
+                $.getJSON(
+                    "/getTemperatureRange",
+                    function(data) {
+                        $("#minTemperature").html(data.minTemperature);
+                        $("#maxTemperature").html(data.maxTemperature);
+                    }
+                );
+                $.getJSON(
+                    "/getDeviceReadings",
+                    function(data) {
+                        $("#tblReadings tbody").empty();
+
+                        $.each(data, function(key, reading) {
+                            $("#tblReadings").append("<tr><td>" + reading.createdDateTime + "</td><td>" + reading.value + "</td></tr>");
+                        });
+                    }
+                );
+
+                setTimeout(arguments.callee, 1000); // every 1s
+            })();
+        </script>
+
+    </body>
+</html>

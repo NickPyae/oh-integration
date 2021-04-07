@@ -1,0 +1,130 @@
+# Copyright 2021 Dell Inc, or its subsidiaries.
+# SPDX-License-Identifier: Apache-2.0
+
+{
+    "description": "Example of Device-Random-Temperature",
+    "name": "Random-Temperature-Generator",
+    "manufacturer": "Dell Technologies",
+    "model": "Device-Random-Temperature-01",
+    "labels": [
+        "device-random-temperature-example"
+    ],
+    "deviceResources": [
+        {
+            "description": "Generate random temperature value",
+            "name": "RandomTemperature",
+            "properties": {
+                "value": {
+                    "type": "Int32",
+                    "readWrite": "W",
+                    "minimum": "50",
+                    "maximum": "200",
+                    "defaultValue": "100"
+                },
+                "units": {
+                    "type": "String",
+                    "readWrite": "R",
+                    "defaultValue": "random temperature value"
+                }
+            }
+        },
+        {
+            "description": "Minimum of random temperature value",
+            "name": "Min_Temperature",
+            "properties": {
+                "value": {
+                    "type": "Int32",
+                    "readWrite": "W",
+                    "minimum": "50",
+                    "maximum": "200",
+                    "defaultValue": "50"
+                },
+                "units": {
+                    "type": "String",
+                    "readWrite": "R",
+                    "defaultValue": "random temperature minimum value"
+                }
+            }
+        },
+        {
+            "description": "Maximum of random temperature value",
+            "name": "Max_Temperature",
+            "properties": {
+                "value": {
+                    "type": "Int32",
+                    "readWrite": "W",
+                    "minimum": "50",
+                    "maximum": "200",
+                    "defaultValue": "200"
+                },
+                "units": {
+                    "type": "String",
+                    "readWrite": "R",
+                    "defaultValue": "random temperature maximum value"
+                }
+            }
+        }
+    ],
+    "deviceCommands": [
+        {
+            "name": "GenerateRandomTemperature",
+            "get": [
+                {
+                    "operation": "get",
+                    "object": "RandomTemperature",
+                    "deviceResource": "RandomTemperature"
+                }
+            ],
+            "set": [
+                {
+                    "operation": "set",
+                    "object": "Min_Temperature",
+                    "deviceResource": "Min_Temperature",
+                    "parameter": "50"
+                },
+                {
+                    "operation": "set",
+                    "object": "Max_Temperature",
+                    "deviceResource": "Max_Temperature",
+                    "parameter": "200"
+                }
+            ]
+        }
+    ],
+    "coreCommands": [
+        {
+            "name": "GenerateRandomTemperature",
+            "get": {
+                "path": "/api/v1/device/{deviceId}/GenerateRandomTemperature",
+                "responses": [
+                    {
+                        "code": "200",
+                        "expectedValues": [
+                            "RandomTemperature"
+                        ]
+                    },
+                    {
+                        "code": "503",
+                        "description": "service unavailable"
+                    }
+                ]
+            },
+            "put": {
+                "path": "/api/v1/device/{deviceId}/GenerateRandomTemperature",
+                "responses": [
+                    {
+                        "code": "200"
+                    },
+                    {
+                        "code": "503",
+                        "description": "service unavailable"
+                    }
+                ],
+                "parameterNames": [
+                    "Min_Temperature",
+                    "Max_Temperature"
+                ]
+            }
+        }
+    ]
+}
