@@ -4,8 +4,9 @@
 package main
 
 import (
-	"device-random-temperature/api"
-	"device-random-temperature/scripts"
+	"eos2git.cec.lab.emc.com/ISG-Edge/HelloSally/device-random-temperature/scripts"
+
+	"eos2git.cec.lab.emc.com/ISG-Edge/HelloSally/device-random-temperature/api"
 )
 
 func main() {

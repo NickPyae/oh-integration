@@ -15,8 +15,9 @@ import (
 
 	"github.com/gorilla/mux"
 
-	"device-random-temperature/helpers"
-	"device-random-temperature/models"
+	"eos2git.cec.lab.emc.com/ISG-Edge/HelloSally/device-random-temperature/models"
+
+	"eos2git.cec.lab.emc.com/ISG-Edge/HelloSally/device-random-temperature/helpers"
 )
 
 var (

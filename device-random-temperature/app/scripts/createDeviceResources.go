@@ -6,7 +6,6 @@ package scripts
 import (
 	"bytes"
 	"context"
-	"device-random-temperature/helpers"
 	"fmt"
 	"io"
 	"log"
@@ -14,6 +13,8 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
+
+	"eos2git.cec.lab.emc.com/ISG-Edge/HelloSally/device-random-temperature/helpers"
 )
 
 func postJSONCoreSvc(baseurl string, path string, jsonArr []byte) {
