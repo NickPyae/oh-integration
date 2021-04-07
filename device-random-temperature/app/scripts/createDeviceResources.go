@@ -184,7 +184,7 @@ func Upload(client *http.Client, url string, values map[string]io.Reader) (err e
 	if res.StatusCode != http.StatusOK {
 		err = fmt.Errorf("bad status: %s", res.Status)
 	}
-	return
+	return err
 }
 
 func mustOpen(f string) *os.File {
