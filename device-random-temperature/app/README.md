@@ -23,6 +23,10 @@ git clone https://eos2git.cec.lab.emc.com/ISG-Edge/HelloSally.git
 
 cd HelloSally/device-random-temperature/app
 
+in /helpers/constants.go, change:
+- CoreServicesBaseURL
+- AddressablePort
+
 go run .
 
 open browser and go to http://localhost:49989/
