@@ -14,7 +14,7 @@ Please check:
 - curl -v <server-node-ip>:30801/api/v1/ping
 - curl -v <server-node-ip>:30802/api/v1/ping
 
-### Creating Docker image
+## Creating Docker image
 
 git clone https://eos2git.cec.lab.emc.com/ISG-Edge/HelloSally.git
 (ensure path is: ~/go/src/HelloSally/device-random-temperature/)
@@ -25,7 +25,7 @@ go test -v ./driver/
 
 docker build -t device-random-temperature-go:latest .
 
-#### Creating Kubernetes resources
+## Creating Kubernetes resources
 
 cd HelloSally/device-random-temperature/k8s
 
