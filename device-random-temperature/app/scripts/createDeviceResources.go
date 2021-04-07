@@ -7,6 +7,7 @@ import (
 	"bytes"
 	"fmt"
 	"io"
+	"log"
 	"mime/multipart"
 	"net/http"
 	"os"
@@ -164,7 +165,9 @@ func UploadDeviceProfile() {
 	path := "/api/v1/deviceprofile/uploadfile"
 	url := coreMetadataURL + path
 	err := Upload(client, url, values)
-	if err != nil {
+	if err != nil && err.Error() == "bad status: 409 Conflict" {
+		log.Println("Device profile cannot be created. Pls check if it already exist.")
+	} else if err != nil {
 		panic(err)
 	}
 }

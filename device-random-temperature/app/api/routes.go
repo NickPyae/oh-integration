@@ -124,8 +124,8 @@ func GetDeviceReadingsHandler(w http.ResponseWriter, r *http.Request) {
 		path := "/api/v1/reading/device/"
 		limit := "20"
 
-		// response, err := http.Get(coreDataURL + path + deviceName + "/" + limit)
-		response, err := http.NewRequest("GET", coreDataURL+path+deviceName+"/"+limit, nil)
+		response, err := http.Get(coreDataURL + path + deviceName + "/" + limit)
+		// response, err := http.NewRequest("GET", coreDataURL+path+deviceName+"/"+limit, nil)
 
 		if err != nil {
 			http.Error(w, "Error", http.StatusInternalServerError)
