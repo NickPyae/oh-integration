@@ -9,9 +9,9 @@ import (
 )
 
 func main() {
-	// TODO: create device profile (which contains device resources)
 	scripts.CreateAddressables()
 	scripts.CreateValueDescriptors()
+	scripts.UploadDeviceProfile()
 	scripts.CreateDeviceService()
 	scripts.CreateDevice()
 
