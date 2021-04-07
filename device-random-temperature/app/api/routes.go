@@ -5,47 +5,22 @@ package api
 
 import (
 	"bytes"
-	"crypto/rand"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"log"
-	"math/big"
 	"net/http"
-	"strconv"
 	"time"
 
 	"github.com/gorilla/mux"
 
+	"device-random-temperature/helpers"
 	"device-random-temperature/models"
 )
 
 var (
 	minTemperature, maxTemperature int64 = 50, 200
 )
-
-// todo: refactor when resolve issue with importing package 'helpers'
-const (
-	coreServicesBaseURL = "http://192.168.56.144"
-	coreDataPort        = "30800"
-	coreMetadataPort    = "30801"
-
-	coreDataURL     = coreServicesBaseURL + ":" + coreDataPort
-	coreMetadataURL = coreServicesBaseURL + ":" + coreMetadataPort
-
-	deviceName   = "Random-Temperature-Generator01"
-	resourceName = "RandomTemperature"
-)
-
-// todo: refactor when resolve issue with importing package 'helpers'
-func random(min int64, max int64) string {
-	nBig, err := rand.Int(rand.Reader, big.NewInt(max-min))
-	if err != nil {
-		panic(err)
-	}
-	n := nBig.Int64()
-	return strconv.FormatInt(n+min, 10)
-}
 
 func SetRoutes() {
 	fileServer := http.FileServer(http.Dir("./static/"))
@@ -124,7 +99,7 @@ func GetDeviceReadingsHandler(w http.ResponseWriter, r *http.Request) {
 		path := "/api/v1/reading/device/"
 		limit := "20"
 
-		response, err := http.Get(coreDataURL + path + deviceName + "/" + limit)
+		response, err := http.Get(helpers.CoreDataURL + path + helpers.DeviceName + "/" + limit)
 		// response, err := http.NewRequest("GET", coreDataURL+path+deviceName+"/"+limit, nil)
 
 		if err != nil {
@@ -168,10 +143,10 @@ func AddDeviceReadingHandler(w http.ResponseWriter, r *http.Request) {
 	path := "/api/v1/event"
 
 	var jsonStr = []byte(`{
-                        "device": "` + deviceName + `",
-                        "readings": [{"name": "` + resourceName + `", "value":"` + random(minTemperature, maxTemperature) + `"}]
+                        "device": "` + helpers.DeviceName + `",
+                        "readings": [{"name": "` + helpers.ResourceName + `", "value":"` + helpers.RandomIntStr(minTemperature, maxTemperature) + `"}]
        				}`)
-	req, err := http.NewRequest("POST", coreDataURL+path, bytes.NewBuffer(jsonStr))
+	req, err := http.NewRequest("POST", helpers.CoreDataURL+path, bytes.NewBuffer(jsonStr))
 	req.Header.Set("Content-Type", "application/json")
 	if err != nil {
 		http.Error(w, "Error", http.StatusInternalServerError)

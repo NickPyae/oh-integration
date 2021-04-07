@@ -5,6 +5,7 @@ package scripts
 
 import (
 	"bytes"
+	"device-random-temperature/helpers"
 	"fmt"
 	"io"
 	"log"
@@ -14,36 +15,17 @@ import (
 	"path/filepath"
 )
 
-// todo: refactor when resolve issue with importing package 'helpers'
-const (
-	coreServicesBaseURL = "http://192.168.56.144"
-	coreDataPort        = "30800"
-	coreMetadataPort    = "30801"
-
-	coreDataURL     = coreServicesBaseURL + ":" + coreDataPort
-	coreMetadataURL = coreServicesBaseURL + ":" + coreMetadataPort
-
-	deviceName        = "Random-Temperature-Generator01"
-	devicePort        = "30080"
-	resourceName      = "RandomTemperature"
-	deviceServiceName = "device-random-temperature"
-	deviceProfileName = "Random-Temperature-Generator"
-
-	defaultMinTemperature = "50"
-	defaultMaxTemperature = "200"
-)
-
 func CreateAddressables() {
 	path := "/api/v1/addressable"
 
 	var jsonStr = []byte(`{
-			"name": "` + deviceServiceName + `",
+			"name": "` + helpers.DeviceServiceName + `",
 			"protocol": "HTTP",
-			"address": "` + coreServicesBaseURL + `",
-			"port": ` + devicePort + `,
+			"address": "` + helpers.CoreServicesBaseURL + `",
+			"port": ` + helpers.AddressablePort + `,
 			"path": "/api/v1/device/register"
 		}`)
-	req, err := http.NewRequest("POST", coreMetadataURL+path, bytes.NewBuffer(jsonStr))
+	req, err := http.NewRequest("POST", helpers.CoreMetadataURL+path, bytes.NewBuffer(jsonStr))
 	req.Header.Set("Content-Type", "application/json")
 	if err != nil {
 		panic(err)
@@ -62,13 +44,13 @@ func CreateValueDescriptors() {
 	path := "/api/v1/valuedescriptor"
 
 	var jsonStr = []byte(`{
-			"name": "` + resourceName + `",
+			"name": "` + helpers.ResourceName + `",
 			"description": "Random temperature readings in Fahrenheit",
 			"type": "Int32",
-			"defaultValue": "` + defaultMinTemperature + `",
-			"labels":["` + deviceServiceName + `"]
+			"defaultValue": "` + helpers.DefaultMinTemperature + `",
+			"labels":["` + helpers.DeviceServiceName + `"]
 		}`)
-	req, err := http.NewRequest("POST", coreDataURL+path, bytes.NewBuffer(jsonStr))
+	req, err := http.NewRequest("POST", helpers.CoreDataURL+path, bytes.NewBuffer(jsonStr))
 	req.Header.Set("Content-Type", "application/json")
 	if err != nil {
 		panic(err)
@@ -87,16 +69,16 @@ func CreateDeviceService() {
 	path := "/api/v1/deviceservice"
 
 	var jsonStr = []byte(`{
-			"name": "` + deviceServiceName + `",
+			"name": "` + helpers.DeviceServiceName + `",
 			"description": "Generates random temperature readings in Fahrenheit",
-			"labels":["` + deviceServiceName + `"],
+			"labels":["` + helpers.DeviceServiceName + `"],
 			"adminState":"unlocked",
 			"operatingState":"enabled",
 			"addressable": {
-				"name":"` + deviceServiceName + `"
+				"name":"` + helpers.DeviceServiceName + `"
 			}
 		}`)
-	req, err := http.NewRequest("POST", coreMetadataURL+path, bytes.NewBuffer(jsonStr))
+	req, err := http.NewRequest("POST", helpers.CoreMetadataURL+path, bytes.NewBuffer(jsonStr))
 	req.Header.Set("Content-Type", "application/json")
 	if err != nil {
 		panic(err)
@@ -115,7 +97,7 @@ func CreateDevice() {
 	path := "/api/v1/device"
 
 	var jsonStr = []byte(`{
-			"name": "` + deviceName + `",
+			"name": "` + helpers.DeviceName + `",
 			"description": "Generates random temperature readings in Fahrenheit",
 			"adminState": "unlocked",
 			"operatingState": "enabled",
@@ -127,19 +109,19 @@ func CreateDevice() {
 				}
 			},
 			"addressable": {
-				"name": "` + deviceServiceName + `"
+				"name": "` + helpers.DeviceServiceName + `"
 			},
 			"labels": [
-				"` + deviceServiceName + `"
+				"` + helpers.DeviceServiceName + `"
 			],
 			"service": {
-				"name": "` + deviceServiceName + `" 
+				"name": "` + helpers.DeviceServiceName + `" 
 			},
 			"profile": {
-				"name": "` + deviceProfileName + `"
+				"name": "` + helpers.DeviceProfileName + `"
 			}
 		}`)
-	req, err := http.NewRequest("POST", coreMetadataURL+path, bytes.NewBuffer(jsonStr))
+	req, err := http.NewRequest("POST", helpers.CoreMetadataURL+path, bytes.NewBuffer(jsonStr))
 	req.Header.Set("Content-Type", "application/json")
 	if err != nil {
 		panic(err)
@@ -163,7 +145,7 @@ func UploadDeviceProfile() {
 	}
 	client := &http.Client{}
 	path := "/api/v1/deviceprofile/uploadfile"
-	url := coreMetadataURL + path
+	url := helpers.CoreMetadataURL + path
 	err := Upload(client, url, values)
 	if err != nil && err.Error() == "bad status: 409 Conflict" {
 		log.Println("Device profile cannot be created. Pls check if it already exist.")

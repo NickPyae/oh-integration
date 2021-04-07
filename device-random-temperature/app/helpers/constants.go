@@ -4,19 +4,19 @@
 package helpers
 
 const (
-	coreServicesBaseURL = "http://192.168.56.144"
-	coreDataPort        = "30800"
-	coreMetadataPort    = "30801"
+	CoreServicesBaseURL = "http://192.168.56.144"
+	CoreDataPort        = "30800"
+	CoreMetadataPort    = "30801"
 
-	coreDataURL     = coreServicesBaseURL + ":" + coreDataPort
-	coreMetadataURL = coreServicesBaseURL + ":" + coreMetadataPort
+	CoreDataURL     = CoreServicesBaseURL + ":" + CoreDataPort
+	CoreMetadataURL = CoreServicesBaseURL + ":" + CoreMetadataPort
 
-	deviceName        = "Random-Temperature-Generator01"
-	devicePort        = "30080"
-	resourceName      = "RandomTemperature"
-	deviceServiceName = "device-random-temperature"
-	deviceProfileName = "Random-Temperature-Generator"
+	DeviceName        = "Random-Temperature-Generator01"
+	AddressablePort   = "30080"
+	ResourceName      = "RandomTemperature"
+	DeviceServiceName = "device-random-temperature"
+	DeviceProfileName = "Random-Temperature-Generator"
 
-	defaultMinTemperature = "50"
-	defaultMaxTemperature = "200"
+	DefaultMinTemperature = "50"
+	DefaultMaxTemperature = "200"
 )

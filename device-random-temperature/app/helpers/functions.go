@@ -9,7 +9,7 @@ import (
 	"strconv"
 )
 
-func random(min int64, max int64) string {
+func RandomIntStr(min int64, max int64) string {
 	nBig, err := rand.Int(rand.Reader, big.NewInt(max-min))
 	if err != nil {
 		panic(err)
