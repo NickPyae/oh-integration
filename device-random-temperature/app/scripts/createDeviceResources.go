@@ -5,6 +5,7 @@ package scripts
 
 import (
 	"bytes"
+	"context"
 	"device-random-temperature/helpers"
 	"fmt"
 	"io"
@@ -16,7 +17,11 @@ import (
 )
 
 func postJSONCoreSvc(baseurl string, path string, jsonArr []byte) {
-	req, err := http.NewRequest("POST", baseurl+path, bytes.NewBuffer(jsonArr))
+	ctx := context.Background()
+	ctx, cancel := context.WithCancel(ctx)
+	defer cancel()
+
+	req, err := http.NewRequestWithContext(ctx, "POST", baseurl+path, bytes.NewBuffer(jsonArr))
 	req.Header.Set("Content-Type", "application/json")
 	if err != nil {
 		panic(err)
@@ -155,7 +160,11 @@ func Upload(client *http.Client, url string, values map[string]io.Reader) (err e
 	w.Close()
 
 	// Now that you have a form, you can submit it to your handler.
-	req, err := http.NewRequest("POST", url, &b)
+	ctx := context.Background()
+	ctx, cancel := context.WithCancel(ctx)
+	defer cancel()
+
+	req, err := http.NewRequestWithContext(ctx, "POST", url, &b)
 	if err != nil {
 		return
 	}

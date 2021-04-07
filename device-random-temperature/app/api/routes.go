@@ -5,6 +5,7 @@ package api
 
 import (
 	"bytes"
+	"context"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
@@ -99,17 +100,25 @@ func GetDeviceReadingsHandler(w http.ResponseWriter, r *http.Request) {
 		path := "/api/v1/reading/device/"
 		limit := "20"
 
-		response, err := http.Get(helpers.CoreDataURL + path + helpers.DeviceName + "/" + limit)
-		// response, err := http.NewRequest("GET", coreDataURL+path+deviceName+"/"+limit, nil)
+		ctx := context.Background()
+		ctx, cancel := context.WithCancel(ctx)
+		defer cancel()
+
+		req, err := http.NewRequestWithContext(ctx, "GET", helpers.CoreDataURL+path+helpers.DeviceName+"/"+limit, nil)
 
 		if err != nil {
 			http.Error(w, "Error", http.StatusInternalServerError)
 			return
 		}
 
-		defer response.Body.Close()
+		client := &http.Client{}
+		resp, err := client.Do(req)
+		if err != nil {
+			http.Error(w, "Error", http.StatusInternalServerError)
+		}
+		defer resp.Body.Close()
 
-		body, err := ioutil.ReadAll(response.Body)
+		body, err := ioutil.ReadAll(resp.Body)
 
 		if err != nil {
 			http.Error(w, "Error", http.StatusInternalServerError)
@@ -146,7 +155,11 @@ func AddDeviceReadingHandler(w http.ResponseWriter, r *http.Request) {
                         "device": "` + helpers.DeviceName + `",
                         "readings": [{"name": "` + helpers.ResourceName + `", "value":"` + helpers.RandomIntStr(minTemperature, maxTemperature) + `"}]
        				}`)
-	req, err := http.NewRequest("POST", helpers.CoreDataURL+path, bytes.NewBuffer(jsonStr))
+	ctx := context.Background()
+	ctx, cancel := context.WithCancel(ctx)
+	defer cancel()
+
+	req, err := http.NewRequestWithContext(ctx, "POST", helpers.CoreDataURL+path, bytes.NewBuffer(jsonStr))
 	req.Header.Set("Content-Type", "application/json")
 	if err != nil {
 		http.Error(w, "Error", http.StatusInternalServerError)
