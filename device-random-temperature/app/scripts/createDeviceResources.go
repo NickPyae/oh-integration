@@ -15,60 +15,54 @@ import (
 	"path/filepath"
 )
 
+func postJSONCoreSvc(baseurl string, path string, jsonArr []byte) {
+	req, err := http.NewRequest("POST", baseurl+path, bytes.NewBuffer(jsonArr))
+	req.Header.Set("Content-Type", "application/json")
+	if err != nil {
+		panic(err)
+	}
+
+	client := &http.Client{}
+	resp, err := client.Do(req)
+	if err != nil {
+		panic(err)
+	}
+
+	defer resp.Body.Close()
+}
+
 func CreateAddressables() {
 	path := "/api/v1/addressable"
 
-	var jsonStr = []byte(`{
+	var jsonArr = []byte(`{
 			"name": "` + helpers.DeviceServiceName + `",
 			"protocol": "HTTP",
 			"address": "` + helpers.CoreServicesBaseURL + `",
 			"port": ` + helpers.AddressablePort + `,
 			"path": "/api/v1/device/register"
 		}`)
-	req, err := http.NewRequest("POST", helpers.CoreMetadataURL+path, bytes.NewBuffer(jsonStr))
-	req.Header.Set("Content-Type", "application/json")
-	if err != nil {
-		panic(err)
-	}
 
-	client := &http.Client{}
-	resp, err := client.Do(req)
-	if err != nil {
-		panic(err)
-	}
-
-	defer resp.Body.Close()
+	postJSONCoreSvc(helpers.CoreMetadataURL, path, jsonArr)
 }
 
 func CreateValueDescriptors() {
 	path := "/api/v1/valuedescriptor"
 
-	var jsonStr = []byte(`{
+	var jsonArr = []byte(`{
 			"name": "` + helpers.ResourceName + `",
 			"description": "Random temperature readings in Fahrenheit",
 			"type": "Int32",
 			"defaultValue": "` + helpers.DefaultMinTemperature + `",
 			"labels":["` + helpers.DeviceServiceName + `"]
 		}`)
-	req, err := http.NewRequest("POST", helpers.CoreDataURL+path, bytes.NewBuffer(jsonStr))
-	req.Header.Set("Content-Type", "application/json")
-	if err != nil {
-		panic(err)
-	}
 
-	client := &http.Client{}
-	resp, err := client.Do(req)
-	if err != nil {
-		panic(err)
-	}
-
-	defer resp.Body.Close()
+	postJSONCoreSvc(helpers.CoreDataURL, path, jsonArr)
 }
 
 func CreateDeviceService() {
 	path := "/api/v1/deviceservice"
 
-	var jsonStr = []byte(`{
+	var jsonArr = []byte(`{
 			"name": "` + helpers.DeviceServiceName + `",
 			"description": "Generates random temperature readings in Fahrenheit",
 			"labels":["` + helpers.DeviceServiceName + `"],
@@ -78,25 +72,14 @@ func CreateDeviceService() {
 				"name":"` + helpers.DeviceServiceName + `"
 			}
 		}`)
-	req, err := http.NewRequest("POST", helpers.CoreMetadataURL+path, bytes.NewBuffer(jsonStr))
-	req.Header.Set("Content-Type", "application/json")
-	if err != nil {
-		panic(err)
-	}
 
-	client := &http.Client{}
-	resp, err := client.Do(req)
-	if err != nil {
-		panic(err)
-	}
-
-	defer resp.Body.Close()
+	postJSONCoreSvc(helpers.CoreMetadataURL, path, jsonArr)
 }
 
 func CreateDevice() {
 	path := "/api/v1/device"
 
-	var jsonStr = []byte(`{
+	var jsonArr = []byte(`{
 			"name": "` + helpers.DeviceName + `",
 			"description": "Generates random temperature readings in Fahrenheit",
 			"adminState": "unlocked",
@@ -121,25 +104,14 @@ func CreateDevice() {
 				"name": "` + helpers.DeviceProfileName + `"
 			}
 		}`)
-	req, err := http.NewRequest("POST", helpers.CoreMetadataURL+path, bytes.NewBuffer(jsonStr))
-	req.Header.Set("Content-Type", "application/json")
-	if err != nil {
-		panic(err)
-	}
 
-	client := &http.Client{}
-	resp, err := client.Do(req)
-	if err != nil {
-		panic(err)
-	}
-
-	defer resp.Body.Close()
+	postJSONCoreSvc(helpers.CoreMetadataURL, path, jsonArr)
 }
 
 func UploadDeviceProfile() {
 	absPath, _ := filepath.Abs("./scripts/device-profile.yaml")
 
-	//prepare the reader instances to encode
+	// prepare the reader instances to encode
 	values := map[string]io.Reader{
 		"file": mustOpen(absPath),
 	}
@@ -177,7 +149,6 @@ func Upload(client *http.Client, url string, values map[string]io.Reader) (err e
 		if _, err = io.Copy(fw, r); err != nil {
 			return err
 		}
-
 	}
 	// Don't forget to close the multipart writer.
 	// If you don't close it, your request will be missing the terminating boundary.
