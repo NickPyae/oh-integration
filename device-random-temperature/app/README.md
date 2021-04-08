@@ -66,10 +66,12 @@ ExecStart=/root/HelloSally/device-random-temperature/app/device-random-temperatu
 WantedBy=multi-user.target
 ```
 
+Reload systemd manager configuration:
 ```
 systemctl daemon-reload  
 ```
 
+Start service:
 ```
 systemctl start device
 ```
