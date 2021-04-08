@@ -1,10 +1,10 @@
 {
   "name": "pattern-edgex-amd64",
-  "label": "Edgex on IBM Edge Computing for Devices, on amd64.",
-  "description": "Pattern for Edgex on IBM Edge Computing for Devices, on amd64.",
+  "label": "Edgex services on amd64",
+  "description": "Pattern for Edgex services on amd64",
   "services": [
     {
-      "serviceUrl": "com.github.joewxboy.horizon.edgex",
+      "serviceUrl": "com.eos2git.cec.lab.emc.hellosally",
       "serviceOrgid": "dellsg",
       "serviceArch": "amd64",
       "serviceVersions": [
@@ -17,7 +17,7 @@
   "userInput": [
     {
       "serviceOrgId": "dellsg",
-      "serviceUrl": "com.github.joewxboy.horizon.edgex",
+      "serviceUrl": "com.eos2git.cec.lab.emc.hellosally",
       "serviceArch": "amd64",
       "serviceVersionRange": "[0.0.0,INFINITY)",
       "inputs": []

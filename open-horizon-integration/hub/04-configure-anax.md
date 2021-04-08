@@ -44,7 +44,7 @@ A service has to be signed so that the agent can verify that autheticity of the 
 This command will put the keys into a default location where other CLI commands know where to find them.
 
 ``` bash
-hzn key create -l 4096 dellsg joe@everywhere.com
+hzn key create -l 4096 dellsg john@everywhere.com
 ```
 
 This will return something like:
@@ -74,7 +74,7 @@ The above should respond with the following, if successful:
 
 ``` json
 [
-  "dellsg/com.github.joewxboy.horizon.edgex_1.0.1_amd64"
+  "dellsg/com.eos2git.cec.lab.emc.hellosally_1.0.1_amd64"
 ]
 ```
 

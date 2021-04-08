@@ -7,8 +7,8 @@
       "driver": "bridge"
     },
     "identity": {
-      "comp": "ibm.com",
-      "user": "joe",
+      "comp": "dellsg.com",
+      "user": "john",
       "name": "localhost",
       "subj": ""
     },

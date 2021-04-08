@@ -34,7 +34,7 @@ You should see output similar to this:
 }
 ```
 
-Then check to ensure that the `com.github.joewxboy.horizon.edgex` Service is running:
+Then check to ensure that the `com.eos2git.cec.lab.emc.hellosally` Service is running:
 
 ``` bash
 hzn service list
@@ -45,7 +45,7 @@ You should see output like this:
 ``` json
 [
   {
-    "url": "com.github.joewxboy.horizon.edgex",
+    "url": "com.eos2git.cec.lab.emc.hellosally",
     "org": "mycluster",
     "version": "1.0.1",
     "arch": "amd64",
