@@ -39,7 +39,7 @@ cd HelloSally/device-random-temperature/app
 
 set required environment variables:
 ```
-export CORE_SVCS_IP="https://<core-svcs-ip>"
+export CORE_SVCS_IP="<core-svcs-ip>"
 export CORE_DATA_PORT="<core-data-port>"
 export CORE_METADATA_PORT="<core-metadata-port>"
 export ADDRESSABLE_PORT="<addressable-port>"
