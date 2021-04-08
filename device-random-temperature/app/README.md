@@ -39,7 +39,7 @@ cd HelloSally/device-random-temperature/app
 
 set required environment variables:
 ```
-export CORE_SVCS_IP="https://<core-svcs>"
+export CORE_SVCS_IP="https://<core-svcs-ip>"
 export CORE_DATA_PORT="<core-data-port>"
 export CORE_METADATA_PORT="<core-metadata-port>"
 export ADDRESSABLE_PORT="<addressable-port>"
@@ -61,15 +61,13 @@ open browser and go to https://localhost:49989/
 
 - get device PUT command. In Postman, call GET with:
 ```
-https://<core-svcs-ip>/api/v1/device
+https://<core-svcs-ip>:<core-command-port>/api/v1/device
 ```
 
 - call device PUT command. In Postman, call PUT with:
 ```
 https://<core-svcs-ip>:<core-command-port>/api/v1/device/<device-id>/command/<command-id>
-```
 
-```
 {
     "MinTemperature": 90,
     "MaxTemperature": 100
