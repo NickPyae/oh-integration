@@ -34,8 +34,8 @@ The results of `hzn exchange user list` should be something like the following:
 Next we will publish an example EdgeX service to the openhorizon hub and then tell the agent to run the service.
 
 ``` bash
-git clone https://eos2git.cec.lab.emc.com/ISG-Edge/open-horizon-integration.git
-cd ./open-horizon-integration
+git clone https://eos2git.cec.lab.emc.com/ISG-Edge/HelloSally.git
+cd ./HelloSally
 ```
 
 First, we'll generate an RSA key pair to be used for signing the edge service.
@@ -61,7 +61,7 @@ The digest is recorded in the published service definition.
 This example service is composed of several EdgeX microservices.
 
 ```
-hzn exchange service publish -P -f hub/configs/service.json
+hzn exchange service publish -P -f app-integration/service.json
 ```
 
 Now check to ensure that the service definition was published and is available in the exchange:
@@ -83,7 +83,7 @@ A pattern is the easiest way for a node to indicate which services it should run
 Policy based service deployment is also supported, but is slightly more complex to setup.
 
 ```
-hzn exchange pattern publish -f hub/configs/pattern.json
+hzn exchange pattern publish -f app-integration/pattern.json
 ```
 
 Now check to ensure the pattern is available:
@@ -120,21 +120,13 @@ mkdir -p /var/run/edgex/logs
 mkdir -p /var/run/edgex/data
 mkdir -p /var/run/edgex/consul/data
 mkdir -p /var/run/edgex/consul/config
-mkdir -p /root/res
 chmod -R a+rwx /var/run/edgex
-chmod -R a+rwx /root/res
-```
-
-Copy the configuration files from the `res` folder in this repository to the `/root/res` folder on the host.
-
-``` bash
-cp hub/res/*.* /root/res
 ```
 
 Now register the node:
 
 ``` bash
-hzn register -p pattern-edgex-amd64 --policy hub/configs/node.policy
+hzn register -p pattern-edgex-amd64 --policy app-integration/node.policy.json
 ```
 
 To confirm that your edge node is registered for the pattern, run:
