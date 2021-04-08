@@ -65,14 +65,14 @@ WantedBy=multi-user.target
 
 These are the default values used for ADDRESSABLE_PORT, CORE_DATA_PORT, CORE_METADATA_PORT:
 - ADDRESSABLE_PORT: 49989
-- CORE_DATA_PORT: 3080
-- CORE_METADATA_PORT: 3081
+- CORE_DATA_PORT: 48080
+- CORE_METADATA_PORT: 48081
 
 To override any of these values, please include in /etc/systemd/system/device.service file
 
 ```
-Environment=CORE_DATA_PORT=3080
-Environment=CORE_METADATA_PORT=3081
+Environment=CORE_DATA_PORT=48080
+Environment=CORE_METADATA_PORT=48081
 Environment=ADDRESSABLE_PORT=49989
 ```
 
@@ -100,7 +100,7 @@ systemctl status device
 ./device-random-temperature
 ```
 
-open browser and go to https://localhost:49989/
+open browser and go to http://localhost:49989/
 (replace 49989 with addressable-port used)
 
 ## Usage
