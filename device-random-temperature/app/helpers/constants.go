@@ -12,7 +12,7 @@ const (
 	CoreMetadataURL = CoreServicesBaseURL + ":" + CoreMetadataPort
 
 	DeviceName        = "Random-Temperature-Generator01"
-	AddressablePort   = "30080"
+	AddressablePort   = "49989"
 	ResourceName      = "RandomTemperature"
 	DeviceServiceName = "device-random-temperature"
 	DeviceProfileName = "Random-Temperature-Generator"
