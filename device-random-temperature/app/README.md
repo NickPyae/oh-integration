@@ -37,14 +37,6 @@ git clone https://eos2git.cec.lab.emc.com/ISG-Edge/HelloSally.git
 cd HelloSally/device-random-temperature/app
 ```
 
-set required environment variables:
-```
-export CORE_SVCS_IP="<core-svcs-ip>"
-export CORE_DATA_PORT="<core-data-port>"
-export CORE_METADATA_PORT="<core-metadata-port>"
-export ADDRESSABLE_PORT="<addressable-port>"
-```
-
 ```
 go build .
 ```
@@ -55,13 +47,18 @@ go build .
 nano /etc/systemd/system/device.service 
 ```
 
-Copy and paste below text to file:
+Check env variables in below text. Then, copy and paste below text to file:
 ```
 [Unit]
 Description=Go Device Random Temperature App
 [Service]
 WorkingDirectory=/root/HelloSally/device-random-temperature/app
 ExecStart=/root/HelloSally/device-random-temperature/app/device-random-temperature
+// Env Vars
+Environment=CORE_SVCS_IP=10.244.14.32
+Environment=CORE_DATA_PORT=3080
+Environment=CORE_METADATA_PORT=3081
+Environment=ADDRESSABLE_PORT=49989
 [Install]
 WantedBy=multi-user.target
 ```
