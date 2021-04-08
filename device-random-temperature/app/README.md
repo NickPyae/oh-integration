@@ -4,7 +4,7 @@ The application creates device service on start, and creates a pre-defined devic
 
 To check:
 ```
-curl -v <core-svcs-ip>:<core-data-port>/api/v1/event/device/Random-Temperature-Generator01/10
+curl -v <core-svcs-ip>:3080/api/v1/event/device/Random-Temperature-Generator01/10
 ```
 
 It also provides API endpoints for:
@@ -18,13 +18,13 @@ Reference: https://docs.edgexfoundry.org/1.3/examples/LinuxTutorial/EdgeX-Foundr
 
 ## Pre-requisites
 
-Ensure EdgeX Core Services (Core Metadata, Core Data, Core Command) are running.
+Ensure EdgeX Core Services (Core Data, Core Metadata, Core Command) are running.
 
 Please check:
 ```
-curl -v <core-svcs-ip>:<core-data-port>/api/v1/ping
-curl -v <core-svcs-ip>:<core-metadata-port>/api/v1/ping
-curl -v <core-svcs-ip>:<core-command-port>/api/v1/ping
+curl -v <core-svcs-ip>:3080/api/v1/ping
+curl -v <core-svcs-ip>:3081/api/v1/ping
+curl -v <core-svcs-ip>:3082/api/v1/ping
 ```
 
 ## Build
@@ -56,9 +56,6 @@ WorkingDirectory=/root/HelloSally/device-random-temperature/app
 ExecStart=/root/HelloSally/device-random-temperature/app/device-random-temperature
 // Env Vars
 Environment=CORE_SVCS_IP=<core-svcs-ip>
-Environment=CORE_DATA_PORT=<core-data-port>
-Environment=CORE_METADATA_PORT=<core-metadata-port>
-Environment=ADDRESSABLE_PORT=<addressable-port>
 [Install]
 WantedBy=multi-user.target
 ```
@@ -79,8 +76,6 @@ systemctl status device
 ```
 
 
-
-
 ## Run
 
 ```
@@ -88,18 +83,17 @@ systemctl status device
 ```
 
 open browser and go to https://localhost:49989/
-(replace 49989 with addressable-port used)
 
 ## Usage
 
 - get device PUT command. In Postman, call GET with:
 ```
-https://<core-svcs-ip>:<core-command-port>/api/v1/device
+https://<core-svcs-ip>:3082/api/v1/device
 ```
 
 - call device PUT command. In Postman, call PUT with:
 ```
-https://<core-svcs-ip>:<core-command-port>/api/v1/device/<device-id>/command/<command-id>
+https://<core-svcs-ip>:3082/api/v1/device/<device-id>/command/<command-id>
 
 {
     "MinTemperature": 90,
