@@ -47,7 +47,7 @@ go build .
 nano /etc/systemd/system/device.service 
 ```
 
-Check env variables in below text. Then, copy and paste below text to file:
+Replace env variables in below text. Then, copy and paste below text to file:
 ```
 [Unit]
 Description=Go Device Random Temperature App
