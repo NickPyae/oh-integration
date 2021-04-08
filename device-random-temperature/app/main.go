@@ -4,19 +4,20 @@
 package main
 
 import (
+	"log"
 	"os"
-
-	"eos2git.cec.lab.emc.com/ISG-Edge/HelloSally/device-random-temperature/scripts"
 
 	"eos2git.cec.lab.emc.com/ISG-Edge/HelloSally/device-random-temperature/api"
 	"eos2git.cec.lab.emc.com/ISG-Edge/HelloSally/device-random-temperature/helpers"
+	"eos2git.cec.lab.emc.com/ISG-Edge/HelloSally/device-random-temperature/scripts"
 )
 
 func main() {
-	os.Setenv("CORE_SVCS_IP", "https://10.244.14.32")
-	os.Setenv("CORE_DATA_PORT", "3080")
-	os.Setenv("CORE_METADATA_PORT", "3081")
-	os.Setenv("ADDRESSABLE_PORT", "49989")
+
+	if os.Getenv("CORE_SVCS_IP") == "" || os.Getenv("CORE_DATA_PORT") == "" || os.Getenv("CORE_METADATA_PORT") == "" || os.Getenv("ADDRESSABLE_PORT") == "" {
+		log.Println("Please ensure env variables 'CORE_SVCS_IP', 'CORE_DATA_PORT', 'CORE_METADATA_PORT', 'ADDRESSABLE_PORT' is present.")
+		os.Exit(1)
+	}
 
 	helpers.CoreServicesBaseURL = os.Getenv("CORE_SVCS_IP")
 	helpers.CoreDataPort = os.Getenv("CORE_DATA_PORT")
