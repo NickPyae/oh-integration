@@ -56,6 +56,7 @@ go build .
 ```
 
 open browser and go to https://localhost:49989/
+(replace 49989 with addressable-port used)
 
 ## Usage
 
