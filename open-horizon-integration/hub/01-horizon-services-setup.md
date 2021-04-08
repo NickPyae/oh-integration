@@ -5,7 +5,6 @@
 ### Open Horizon Hub Services (Exchange, Switchboard, AgBots, Sync Service)
 + OS: Ubuntu server, latest build recommended.  Instructions assume this.
 + VM: 4Gb RAM, 20Gb storage, 1vCPU, root access
-+ NOTE: Ensure you are not installing and running this on a system that already has a service using port 80.
 
 ### Open Horizon Agent (Anax)
 + OS: Ubuntu server or desktop (latest build recommended), or OSX.  
@@ -16,8 +15,6 @@
 Stand up your environment for the Horizon Hub Services and open a shell to update utilities.
 *NOTE*: You will need to perform all of these tasks as root.
 
-If you clone this repository, it will be easier to modify and use the configuration and resource files. 
-The following instructions will assume that you have done so and that the contents are in `./horizon-edgex`
 
 ``` bash
 git clone https://eos2git.cec.lab.emc.com/ISG-Edge/HelloSally.git
