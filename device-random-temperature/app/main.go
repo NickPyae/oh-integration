@@ -34,7 +34,7 @@ func main() {
 
 	helpers.DeviceServiceIP = os.Getenv("DEVICE_SVC_IP")
 	helpers.CoreServicesIP = os.Getenv("CORE_SVCS_IP")
-	helpers.CoreServicesBaseURL = "https://" + os.Getenv("CORE_SVCS_IP")
+	helpers.CoreServicesBaseURL = "http://" + os.Getenv("CORE_SVCS_IP")
 	helpers.CoreDataPort = "48080"
 	helpers.CoreMetadataPort = "48081"
 	helpers.AddressablePort = "49989"
