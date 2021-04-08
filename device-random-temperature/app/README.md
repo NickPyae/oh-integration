@@ -56,6 +56,7 @@ WorkingDirectory=/root/HelloSally/device-random-temperature/app
 ExecStart=/root/HelloSally/device-random-temperature/app/device-random-temperature
 // Env Vars
 Environment=CORE_SVCS_IP=<core-svcs-ip>
+Environment=DEVICE_SVC_IP=<device-svc-ip>
 [Install]
 WantedBy=multi-user.target
 ```

@@ -4,5 +4,5 @@
 package helpers
 
 var (
-	CoreServicesIP, CoreServicesBaseURL, CoreDataPort, CoreMetadataPort, AddressablePort, CoreDataURL, CoreMetadataURL string = "", "", "", "", "", "", ""
+	DeviceServiceIP, CoreServicesIP, CoreServicesBaseURL, CoreDataPort, CoreMetadataPort, AddressablePort, CoreDataURL, CoreMetadataURL string = "", "", "", "", "", "", "", ""
 )

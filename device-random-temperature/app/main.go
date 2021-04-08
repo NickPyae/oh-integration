@@ -14,8 +14,8 @@ import (
 
 func main() {
 
-	if os.Getenv("CORE_SVCS_IP") == "" {
-		log.Println("Please ensure env variables 'CORE_SVCS_IP' is present.")
+	if os.Getenv("CORE_SVCS_IP") == "" || os.Getenv("DEVICE_SVC_IP") == "" {
+		log.Println("Please ensure env variables 'CORE_SVCS_IP' and 'DEVICE_SVC_IP' is present.")
 		os.Exit(1)
 	}
 
@@ -32,6 +32,7 @@ func main() {
 		helpers.AddressablePort = os.Getenv("ADDRESSABLE_PORT")
 	}
 
+	helpers.DeviceServiceIP = os.Getenv("DEVICE_SVC_IP")
 	helpers.CoreServicesIP = os.Getenv("CORE_SVCS_IP")
 	helpers.CoreServicesBaseURL = "https://" + os.Getenv("CORE_SVCS_IP")
 	helpers.CoreDataPort = "3080"

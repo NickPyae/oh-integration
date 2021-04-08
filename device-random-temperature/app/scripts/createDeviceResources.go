@@ -43,7 +43,7 @@ func CreateAddressables() {
 	var jsonArr = []byte(`{
 			"name": "` + helpers.DeviceServiceName + `",
 			"protocol": "HTTP",
-			"address": "` + helpers.CoreServicesIP + `",
+			"address": "` + helpers.DeviceServiceIP + `",
 			"port": ` + helpers.AddressablePort + `,
 			"path": "/api/v1/device/register"
 		}`)
