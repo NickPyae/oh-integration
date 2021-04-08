@@ -49,10 +49,43 @@ export ADDRESSABLE_PORT="<addressable-port>"
 go build .
 ```
 
+## Add binary as systemd unit
+
+```
+nano /etc/systemd/system/device.service 
+```
+
+Copy and paste below text to file:
+```
+[Unit]
+Description=Go Device Random Temperature App
+[Service]
+WorkingDirectory=/root/HelloSally/device-random-temperature/app
+ExecStart=/root/HelloSally/device-random-temperature/app/device-random-temperature
+[Install]
+WantedBy=multi-user.target
+```
+
+```
+systemctl daemon-reload  
+```
+
+```
+systemctl start device
+```
+
+Check status:
+```
+systemctl status device
+```
+
+
+
+
 ## Run
 
 ```
-./device-random-temperature.exe
+./device-random-temperature
 ```
 
 open browser and go to https://localhost:49989/
