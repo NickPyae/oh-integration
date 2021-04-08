@@ -4,10 +4,6 @@
 package helpers
 
 const (
-	CoreDataPort     = "3080"
-	CoreMetadataPort = "3081"
-	AddressablePort  = "49989"
-
 	DeviceName        = "Random-Temperature-Generator01"
 	ResourceName      = "RandomTemperature"
 	DeviceServiceName = "device-random-temperature"
