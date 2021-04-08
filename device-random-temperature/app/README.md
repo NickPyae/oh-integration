@@ -38,6 +38,8 @@ cd HelloSally/device-random-temperature/app
 ```
 
 ```
+rm device-random-temperature
+
 go build .
 ```
 
@@ -76,7 +78,6 @@ Environment=ADDRESSABLE_PORT=49989
 
 Then, save file.
 
-
 Reload systemd manager configuration:
 ```
 systemctl daemon-reload  
@@ -91,8 +92,6 @@ Check status:
 ```
 systemctl status device
 ```
-
-
 
 
 ## Run
