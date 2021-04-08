@@ -14,8 +14,8 @@ import (
 
 func main() {
 
-	if os.Getenv("CORE_SVCS_IP") == "" || os.Getenv("CORE_DATA_PORT") == "" || os.Getenv("CORE_METADATA_PORT") == "" || os.Getenv("ADDRESSABLE_PORT") == "" {
-		log.Println("Please ensure env variables 'CORE_SVCS_IP', 'CORE_DATA_PORT', 'CORE_METADATA_PORT', 'ADDRESSABLE_PORT' is present.")
+	if os.Getenv("CORE_SVCS_IP") == "" {
+		log.Println("Please ensure env variables 'CORE_SVCS_IP' is present.")
 		os.Exit(1)
 	}
 

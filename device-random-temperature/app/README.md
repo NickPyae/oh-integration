@@ -56,9 +56,9 @@ WorkingDirectory=/root/HelloSally/device-random-temperature/app
 ExecStart=/root/HelloSally/device-random-temperature/app/device-random-temperature
 // Env Vars
 Environment=CORE_SVCS_IP=<core-svcs-ip>
-Environment=CORE_DATA_PORT=<core-data-port>
-Environment=CORE_METADATA_PORT=<core-metadata-port>
-Environment=ADDRESSABLE_PORT=<addressable-port>
+Environment=CORE_DATA_PORT=3080
+Environment=CORE_METADATA_PORT=3081
+Environment=ADDRESSABLE_PORT=49989
 [Install]
 WantedBy=multi-user.target
 ```
