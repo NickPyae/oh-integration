@@ -20,7 +20,7 @@ If you clone this repository, it will be easier to modify and use the configurat
 The following instructions will assume that you have done so and that the contents are in `./horizon-edgex`
 
 ``` bash
-git clone https://eos2git.cec.lab.emc.com/ISG-Edge/open-horizon-integration.git
+git clone https://eos2git.cec.lab.emc.com/ISG-Edge/HelloSally.git
 ```
 
 ### Install Prerequisites
