@@ -4,9 +4,9 @@
 package helpers
 
 const (
-	CoreServicesBaseURL = "http://192.168.56.144"
-	CoreDataPort        = "30800"
-	CoreMetadataPort    = "30801"
+	CoreServicesBaseURL = "https://10.244.14.32"
+	CoreDataPort        = "3080"
+	CoreMetadataPort    = "3081"
 
 	CoreDataURL     = CoreServicesBaseURL + ":" + CoreDataPort
 	CoreMetadataURL = CoreServicesBaseURL + ":" + CoreMetadataPort
