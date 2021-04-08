@@ -3,7 +3,7 @@
     "label": "edgex",
     "description": "EdgeX Foundry service",
     "documentation": "",
-    "url": "com.github.joewxboy.horizon.edgex",
+    "url": "com.eos2git.cec.lab.emc.hellosally",
     "version": "1.0.1",
     "arch": "amd64",
     "public": false,
