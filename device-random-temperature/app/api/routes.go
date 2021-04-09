@@ -135,7 +135,7 @@ func GetDeviceReadingsHandler(w http.ResponseWriter, r *http.Request) {
 		}
 
 		for i := range readings {
-			dt := time.Unix(readings[i].Created, 0)
+			dt := time.Unix(0, readings[i].Created*int64(time.Millisecond))
 			readings[i].CreatedDateTime = dt.String()
 		}
 
