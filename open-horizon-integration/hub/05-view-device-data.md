@@ -46,8 +46,8 @@ You should see output like this:
 [
   {
     "url": "com.eos2git.cec.lab.emc.hellosally",
-    "org": "mycluster",
-    "version": "1.0.1",
+    "org": "dellsg",
+    "version": "0.0.1",
     "arch": "amd64",
     "variables": {}
   }
@@ -121,4 +121,4 @@ Potential ways forward include refactoring the example so that individual EXF mi
 
 # Next
 
-[Add the SMA to the Service Definition](06-add-the-sma.md).
+[Exposing Open Horizon Agent API to Outside](06-expose-agent-api.md).

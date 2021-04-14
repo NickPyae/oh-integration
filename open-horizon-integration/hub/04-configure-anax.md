@@ -74,7 +74,7 @@ The above should respond with the following, if successful:
 
 ``` json
 [
-  "dellsg/com.eos2git.cec.lab.emc.hellosally_1.0.1_amd64"
+  "dellsg/com.eos2git.cec.lab.emc.hellosally_0.0.1_amd64"
 ]
 ```
 
@@ -100,34 +100,20 @@ It should respond with:
 ]
 ```
 
-Last, let's register the openhorizon agent with the hub, so that it will begin executing the service.
-
-To prepare the node, manually create the volumes that will be used by the edge services:
-
-```
-docker volume create db-data
-docker volume create log-data
-docker volume create consul-data
-docker volume create consul-config
-```
-
-(Optionally) verify the volumes have been created: `docker volume list`
-
-Manually setup and open the permissions on the host directories being bound:
-
-```
-mkdir -p /var/run/edgex/logs
-mkdir -p /var/run/edgex/data
-mkdir -p /var/run/edgex/consul/data
-mkdir -p /var/run/edgex/consul/config
-chmod -R a+rwx /var/run/edgex
-```
-
-Now register the node:
+Export KUIPER_IP and KUIPER_PORT as environment variables to host shell environment so that these env variables can be injected into app-init container during runtime.
 
 ``` bash
-hzn register -p pattern-edgex-amd64 --policy app-integration/node.policy.json
+export KUIPER_IP=x.x.x.x
+export KUIPER_PORT=48075
 ```
+
+Last, let's register the openhorizon agent with the hub, so that it will begin executing the service.
+
+``` bash
+hzn register -p pattern-edgex-amd64 --policy app-integration/node.policy.json -f app-integration/userinput.json
+```
+
+The argument, -f app-integration/userinput.json informs the registration command to use the userinput file to start any configuration variables that are used by any of the services in the registered deployment pattern. The file provides configuration variable values at registration time. When you pass this file on the hzn register ... -f ... command line, the hzn command first runs envsubst to enhance the file by extracting values from the host shell environment. 
 
 To confirm that your edge node is registered for the pattern, run:
 

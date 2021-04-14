@@ -49,3 +49,6 @@ curl -s -X POST http://${KUIPER_IP}:${KUIPER_PORT}/rules \
         }
     ]
 }' 2>&1
+
+
+tail -f /dev/null

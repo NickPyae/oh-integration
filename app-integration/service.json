@@ -4,7 +4,7 @@
   "description": "EdgeX Foundry service",
   "documentation": "",
   "url": "com.eos2git.cec.lab.emc.hellosally",
-  "version": "1.3.1",
+  "version": "0.0.1",
   "arch": "amd64",
   "public": false,
   "sharable": "singleton",
@@ -229,6 +229,10 @@
             "HostIP": "0.0.0.0"
           }
         ]
+      },
+      "app-init": {
+        "image": "pyaephyokyaw/app-init:0.0.1",
+        "privileged": false
       }
     }
   },
