@@ -1,0 +1,12 @@
+{
+    "services": [
+        {
+            "org": "dellsg",
+            "url": "com.eos2git.cec.lab.emc.hellosally",
+            "variables": {
+                "KUIPER_IP": "$KUIPER_IP",
+                "KUIPER_PORT": "$KUIPER_PORT"
+            }
+        }
+    ]
+}
