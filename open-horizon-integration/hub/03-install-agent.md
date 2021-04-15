@@ -1,16 +1,10 @@
 # Install the Open Horizon Agent
 
-This continues the instructions from [Install the Open Horizon Hub Services](01-horizon-services-setup.md) and 
-[Build and Run](02-build-and-run-horizon.md) the Open Horizon Hub Services.
+This continues the instructions from [Install the Open Horizon Management Hub Services](01-horizon-services-setup.md) and 
+[Build and Run](02-build-and-run-horizon.md) the Open Horizon Management Hub Services.
 
-Stand up your environment in the other tier for the Horizon Agent (Anax) and open a shell.  
-Do not attempt this in the same environment as the Horizon Services 
+Provision a new VM to run the Horizon Agent (Anax). Do not attempt this in the same environment or VM as the Horizon Services 
 due to port conflicts and environment variable collisions.
-Instructions below are for either Ubuntu or OSX.
-
-## For Ubuntu
-
-IMPORTANT, DO NOT SKIP THIS STEP
 
 Become root so the following several steps will work properly
 
@@ -37,7 +31,7 @@ curl -fsSL get.docker.com | sh
 docker --version
 ```
 
-Install the Anax Agent:
+Install the Anax Agent and CLI:
 
 Note: We are going to download horizon cli and agent package from open-horizon anax repo releases.
 
@@ -46,12 +40,6 @@ wget https://github.com/open-horizon/anax/releases/download/v2.28.0-338/horizon-
 tar -xzvf horizon-agent-linux-deb-amd64.tar.gz
 dpkg -i horizon-cli_2.28.0-338_amd64.deb
 dpkg -i horizon_2.28.0-338_amd64.deb
-```
-
-IMPORTANT, exit out of root, back to your user account
-
-``` bash
-exit
 ```
 
 Check the version to confirm that the Horizon CLI is installed and working
@@ -72,7 +60,7 @@ When you look at the output for `hzn node list`, pay attention to the line for t
 ```
 
 When the Agent is properly configured, 
-it will point to the public IP address of the Horizon Hub Services that you stood up earlier, and is useful for confirming proper configuration.
+it will point to the public IP address of the Horizon Management Hub Services that you stood up earlier, and is useful for confirming proper configuration.
 
 To fix this, you will edit the horizon agent configuration file and then restart the agent service.
 

@@ -1,6 +1,6 @@
-# Build and Run the Open Horizon Hub Services
+# Build and Run the Open Horizon Management Hub Services
 
-This continues the instructions from [Install the Open Horizon Hub Services](01-horizon-services-setup.md).
+This continues the instructions from [Install the Open Horizon Management Hub Services](01-horizon-services-setup.md).
 
 *NOTE*: This assumes you are running as root (with `sudo`) on the Ubuntu VM 
 as described in the previous set of instructions and are continuing in the same session. 
@@ -11,17 +11,15 @@ If you are not, you may need to export all previous environment variables from s
 ``` bash
 export MY_IP=`ifconfig | egrep 'inet ' | sed 's/addr://' | awk '{ print $2 }' | egrep -v '^172.|^10.|^127.' | head -1`
 echo "export MY_IP=${MY_IP}" >> ~/.bashrc
-export HZN_ORG_ID=dellsg
 echo "export HZN_ORG_ID=dellsg" >> ~/.bashrc
-export HZN_EXCHANGE_URL=http://${MY_IP}:3090/v1/
 echo "export HZN_EXCHANGE_URL=http://${MY_IP}:3090/v1/" >> ~/.bashrc
-export HZN_FSS_CSSURL=http://${MY_IP}:9443
 echo "export HZN_FSS_CSSURL=http://${MY_IP}:9443" >> ~/.bashrc
-export HZN_EXCHANGE_ROOT_USER_AUTH='root/root:Horizon-Rul3s'
-echo "export HZN_EXCHANGE_ROOT_USER_AUTH='root/root:Horizon-Rul3s'" >> ~/.bashrc
+echo "export HZN_EXCHANGE_ROOT_USER_AUTH=root/root:Horizon-Rul3s" >> ~/.bashrc
+echo "export HZN_EXCHANGE_USER_AUTH=admin:adminpw" >> ~/.bashrc
+source ~/.bashrc
 ```
 
-### Edit the Hub Services Configuration JSON
+### Edit Management Hub Services Configuration JSON
 
 NOTE: Again, this is assuming that you cloned this repository and it is located at `./open-horizon-integration/`.
 
@@ -56,11 +54,21 @@ make
 make up
 ```
 
-NOTE: openhorizon/amd64_exchange-api container will exit due to file permission. To verify this, run `docker ps -a`, you will see that this particular container exited. To fix this issue, run below command in current `horizon-edgex/oh` directory
+NOTE: `openhorizon/amd64_exchange-api` container will exit due to file permission. To verify this, run `docker ps -a`, you will see that this particular container exited. To fix this issue, run below command in current `horizon-edgex/oh` directory
 
 ``` bash
 chmod -R 777 exchange
 make up
+```
+
+Install Open Horizon hzn CLI:
+
+Note: We are going to download horizon cli from open-horizon anax repo releases.
+
+``` bash
+wget https://github.com/open-horizon/anax/releases/download/v2.28.0-338/horizon-agent-linux-deb-amd64.tar.gz
+tar -xzvf horizon-agent-linux-deb-amd64.tar.gz
+dpkg -i horizon-cli_2.28.0-338_amd64.deb
 ```
 
 Let's confirm that the Exchange is running (and our environment variable are configured correctly) by 
