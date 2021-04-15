@@ -57,12 +57,21 @@ Created keys:
 
 Publish the _service_ definition to the exchange.
 The command will run for a bit, and will pull each container from the container registry so that it can obtain the container digest.
-The digest is recorded in the published service definition.
-This example service is composed of several EdgeX microservices.
+The digest is recorded in the published service definition. Provide your JFrog Artifactory user name and API Key.
 
+Note: this below command is only required if you are publishing your service from HOP or Franklin Labs.
 ```
-hzn exchange service publish -P -f app-integration/service.json
+hzn exchange service publish -P -r "amaas-eos-mw1.cec.lab.emc.com:5070:your_user_name:your_api_key" -f app-integration/service.json
 ```
+
+The -r "amaas-eos-mw1.cec.lab.emc.com:5070:your_user_name:your_api_key" argument indicates to Horizon exchange which Docker container registry to use, and indicates your credentials, such as your API key. This will pull the images from private JFrog Artifactory.
+This will also put your private Container Registry API Key into Horizon exchange under the service definition so Horizon edge nodes can automatically retrieve the service definition when needed.
+
+If you are testing locally on your VirtualBox, use 
+```
+hzn exchange service publish -P -f app-integration/service.dockerhub.json
+```
+This will pull the images from public Docker Hub instead.
 
 Now check to ensure that the service definition was published and is available in the exchange:
 
