@@ -43,6 +43,7 @@ You will register the device that is running the Agent as an edge node with the 
 3. [Install the Open Horizon Agent](03-install-agent.md) software
 4. [Configure the Agent](04-configure-anax.md)
 5. [View the Device Data](05-view-device-data.md)
+6. [Exposing Open Horizon Agent API](06-expose-agent-api.md)
 
 ## FAQ
 
