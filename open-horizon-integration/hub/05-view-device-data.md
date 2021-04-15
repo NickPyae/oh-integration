@@ -1,6 +1,6 @@
 
 
-# View the Device Data
+# View the Device Data on Agent VM
 
 Now that EdgeX Foundry (EXF) is running on your Edge Node and the [Random Integer Device Service](https://docs.edgexfoundry.org/1.2/examples/Ch-ExamplesRandomDeviceService/) is posting a simple random event message every five seconds, let's explore ways to view that data.  We'll then modify the interval and range of values and see it change in reponse.
 
@@ -96,29 +96,6 @@ Core Metadata will show us the properties of the Device:
 ``` bash
 curl --silent http://localhost:48081/api/v1/device | jq .[0].service
 ```
-
-## Modify the Device Settings
-
-The initial configuration of the Device is specified in the [Device Random Configuration TOML file](./hub/res/device-random-config.toml).  Properties within can be divided into those that can be updated without restarting the service (writable) and those that will not take effect until the Service is restarted (read-only).  See [Configuration and Registry](https://docs.edgexfoundry.org/1.2/microservices/configuration/Ch-Configuration/#readable-vs-writable-settings) for more information on this topic. 
-
-### Writable Settings
-
-The Core Command provides a PUT endpoint that will allow you to modify a Device configuration to alter future reading values.
-
-### Read-only Settings
-
-Persisted settings are stored in Consul in a typical EdgeX Foundry installation, and should be modified there.  EdgeX provides several methods to update those values.  In this case, we are using TOML files to configure services, and thus you will need to update the [Device Random Configuration TOML file](./hub/res/device-random-config.toml) to change those value.  A restart of the Service will then be required for any changes to take effect.
-
-### Restarting an EXF Service
-
-If you had the System Management Agent (SMA) installed you could simply POST a restart action to the appropriate endpoint ([restart a service](https://docs.edgexfoundry.org/1.2/microservices/system-management/agent/Ch_SysMgmtAgent/#restart-a-service)) to initiate a graceful restart of that specific micro-service.  However, we do not have the SMA in our current example.
-
-You could use Open Horizon to restart the Service, but that would introduce two complications.  First, we populated the configuration from a static, external file.  For the settings to persist, we'd need to edit that file before restarting.  Second, we defined the EXF orchestration as a single Horizon Service, which means that you'd have to restart the whole instance of seven Docker images.
-
-Or you could `ssh` to the machine and use the Docker CLI to kill the process and rely on Open Horizon to restart it for you automatically.  While this approach works well, it is not graceful, does not solve the persistence issue, and violates the spirit of Open Horizon in that we're attempting to prevent an administrator from needing to log onto individual Devices in the first place.
-
-Potential ways forward include refactoring the example so that individual EXF micro-services are implemented as individual Open Horizon Services, or adding the SMA to the Open Horizon Service definition.
-
 # Next
 
 [Exposing Open Horizon Agent API to Outside](06-expose-agent-api.md).

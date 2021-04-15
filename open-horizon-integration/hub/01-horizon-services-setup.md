@@ -1,18 +1,18 @@
-# Install the Open Horizon Hub Services
+# Install the Open Horizon Management Hub Services
 
 ## Pre-requisites
 
-### Open Horizon Hub Services (Exchange, Switchboard, AgBots, Sync Service)
+### Open Horizon Management Hub Services (Exchange, Switchboard, AgBots, Sync Service)
 + OS: Ubuntu server, latest build recommended.  Instructions assume this.
 + VM: 4Gb RAM, 20Gb storage, 1vCPU, root access
 
 ### Open Horizon Agent (Anax)
-+ OS: Ubuntu server or desktop (latest build recommended), or OSX.  
++ OS: Ubuntu server or desktop (latest build recommended).  
 + VM: 1Gb RAM, 10Gb storage, 1vCPU, root access
 
 ## Initial setup
 
-Stand up your environment for the Horizon Hub Services and open a shell to update utilities.
+Provision a new VM to run Horizon Management Hub Services.
 *NOTE*: You will need to perform all of these tasks as root.
 
 
@@ -48,4 +48,4 @@ Once it asks for user name and password, use your user name and API Key as passw
 
 ## Next
 
-[Build and Run](02-build-and-run-horizon.md) the Open Horizon Hub Services.
+[Build and Run](02-build-and-run-horizon.md) the Open Horizon Management Hub Services.

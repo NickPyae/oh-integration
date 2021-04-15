@@ -1,19 +1,20 @@
-# Configure the Anax Agent
+# Configure the Anax Agent VM
 
-This continues the instructions from [Install the Open Horizon Hub Services](01-horizon-services-setup.md) and 
-[Build and Run](02-build-and-run-horizon.md) the Open Horizon Hub Services and 
-[Install the Open Horizon Agent](03-install-agent.md) software.
+This continues the instructions from [Install the Open Horizon Management Hub Services](01-horizon-services-setup.md) and 
+[Build and Run](02-build-and-run-horizon.md) the Open Horizon Management Hub Services and 
+[Install the Open Horizon Agent](03-install-agent.md).
 
-Configure environment variables so the openhorizon CLI can connect to the exchange.
+Configure environment variables so the Open Horizon hzn CLI can connect to the exchange from Agent VM.
 
-NOTE: Replace `x.x.x.x` with the actual IP address of the machine running the Open Horizon Hub Services.
+NOTE: Replace `x.x.x.x` with the actual IP address of the machine running the Open Horizon Management Hub Services.
 
 ``` bash
-export HZN_EXCHANGE_URL=http://x.x.x.x:3090/v1
-export ORG_ID=dellsg
-export HZN_ORG_ID=dellsg
-export HZN_EXCHANGE_USER_AUTH=admin:adminpw
-echo "export HZN_EXCHANGE_USER_AUTH='admin:adminpw'" >> ~/.bashrc
+echo "export HZN_EXCHANGE_URL=http://x.x.x.x:3090/v1" >> ~/.bashrc
+echo "export ORG_ID=dellsg" >> ~/.bashrc
+echo "export HZN_ORG_ID=dellsg" >> ~/.bashrc
+echo "export HZN_EXCHANGE_USER_AUTH=admin:adminpw" >> ~/.bashrc
+source ~/.bashrc
+
 hzn exchange user list
 ```
 
@@ -31,7 +32,16 @@ The results of `hzn exchange user list` should be something like the following:
 }
 ```
 
-Next we will publish an example EdgeX service to the openhorizon hub and then tell the agent to run the service.
+Before we deploy any services using hzn CLI, there are two options:
+
+1. Deploy all services `ONLY from Management Hub VM` to Agent VM using hzn CLI
+2. Deploy all services from Agent VM itself using hzn CLI. This is default way of deploying open horizon services so far.
+
+For Option 1, please follow this guide: [Exposing Open Horizon Agent API to Outside](06-expose-agent-api.md) and come back here for the remaining steps below to deploy services.
+
+For Option 2, you can follow the remaining steps below to deploy services.
+
+Next we will publish an example EdgeX service to Open Horizon Management hub and then tell the agent to run the service.
 
 ``` bash
 git clone https://eos2git.cec.lab.emc.com/ISG-Edge/HelloSally.git
@@ -110,6 +120,8 @@ It should respond with:
 ```
 
 Export KUIPER_IP and KUIPER_PORT as environment variables to host shell environment so that these env variables can be injected into app-init container during runtime.
+
+NOTE: Replace `x.x.x.x` with the actual IP address of the machine running kuiper rule engine service.
 
 ``` bash
 export KUIPER_IP=x.x.x.x
