@@ -17,6 +17,18 @@ if [[ "$connected" = false ]]; then
     exit 1
 fi
 
+echo "Cleaning up existing RedisGears registrations..."
+reg=`redis-cli -h ${REDIS_IP} -p ${REDIS_PORT} rg.dumpregistrations`
+if [[ "$reg" != "" ]]; then
+    ids=( `echo "$reg" | grep -E "^0000000000000000000000000000000000000000-"` )
+    for id in "${ids[@]}"; do
+        echo "Unregistering id: $id"
+        redis-cli -h ${REDIS_IP} -p ${REDIS_PORT} rg.unregister "$id"
+    done
+else
+    echo "No existing registrations."
+fi
+
 echo "Registering RedisGears function..."
 redis-cli -h ${REDIS_IP} -p ${REDIS_PORT} RG.PYEXECUTE "`cat transform.py`"
 
