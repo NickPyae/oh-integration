@@ -21,7 +21,7 @@ curl -s -X POST http://${KUIPER_IP}:${KUIPER_PORT}/rules \
                 "method": "POST",
                 "dataTemplate": "hello-sally temperature={{.RandomTemperature}} {{printf \"%.0f\" .created}}",
                 "sendSingle": true,
-                "headers": {"Authorization": "'"${INFLUXDB_TOKEN}"'"}
+                "headers": {"Authorization": "Token '"${INFLUXDB_TOKEN}"'"}
             }
         },
         {
@@ -44,7 +44,7 @@ curl -s -X POST http://${KUIPER_IP}:${KUIPER_PORT}/rules \
                 "method": "POST",
                 "dataTemplate": "hello-sally temperature={{.RandomTemperature}} {{printf \"%.0f\" .created}}",
                 "sendSingle": true,
-                "headers": {"Authorization": "'"${INFLUXDB_CLOUD_TOKEN}"'"}
+                "headers": {"Authorization": "Token '"${INFLUXDB_CLOUD_TOKEN}"'"}
             }
         },
         {
