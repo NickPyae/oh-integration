@@ -140,6 +140,19 @@ And once the agreement is finalized, you should be able to see the containers ru
 sudo docker ps
 ```
 
+If you want to unregister agent node from Management Hub or you see error message like below when you try to register your agent node
+
+``` bash
+Error: this Horizon node is already registered or in the process of being registered. If you want to register it differently, run 
+'hzn unregister' first.
+```
+
+From Agent VM, run 
+
+``` bash
+hzn unregister -D
+```
+
 # Next
 
 [Exposing Open Horizon Agent API to Outside](05-expose-agent-api.md).
