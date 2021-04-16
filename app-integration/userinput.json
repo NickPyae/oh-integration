@@ -10,7 +10,9 @@
                 "INFLUXDB_PORT": "$INFLUXDB_PORT",
                 "INFLUXDB_TOKEN": "$INFLUXDB_TOKEN",
                 "INFLUXDB_CLOUD_TOKEN": "$INFLUXDB_CLOUD_TOKEN",
-                "BUCKET_NAME": "$BUCKET_NAME"
+                "BUCKET_NAME": "$BUCKET_NAME",
+                "REDIS_IP": "$REDIS_IP",
+                "REDIS_PORT": "$REDIS_PORT"
             }
         }
     ]

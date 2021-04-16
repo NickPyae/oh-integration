@@ -13,24 +13,10 @@
   "deployment": {
     "services": {
       "edgex-redis": {
-        "image": "redis:latest",
+        "image": "redislabs/redisgears:latest",
         "privileged": true,
-        "environment": [
-          "CLIENTS_COMMAND_HOST=edgex-core-command",
-          "CLIENTS_COREDATA_HOST=edgex-core-data",
-          "CLIENTS_DATA_HOST=edgex-core-data",
-          "CLIENTS_METADATA_HOST=edgex-core-metadata",
-          "CLIENTS_NOTIFICATIONS_HOST=edgex-support-notifications",
-          "CLIENTS_RULESENGINE_HOST=edgex-kuiper",
-          "DATABASES_PRIMARY_HOST=edgex-redis",
-          "EDGEX_SECURITY_SECRET_STORE=false",
-          "REGISTRY_HOST=edgex-core-consul"
-        ],
         "binds": [
-          "db-data:/data/db",
-          "log-data:/edgex/logs:rw",
-          "consul-config:/consul/config",
-          "consul-data:/consul/data"
+          "db-data:/data/db"
         ],
         "ports": [
           {
@@ -231,7 +217,7 @@
         ]
       },
       "app-init": {
-        "image": "pyaephyokyaw/app-init:0.0.1",
+        "image": "lmxn/app-init:0.0.1",
         "privileged": false
       }
     }
