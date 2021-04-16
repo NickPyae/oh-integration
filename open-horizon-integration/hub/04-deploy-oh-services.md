@@ -16,7 +16,7 @@ git clone https://eos2git.cec.lab.emc.com/ISG-Edge/HelloSally.git
 cd ./HelloSally
 ```
 
-All the services to be deployed can be found inside `app-integration/servce.json` file.
+All the services to be deployed can be found inside `app-integration/service.json` file.
 
 First, we'll generate an RSA key pair to be used for signing the edge service.
 A service is one or more microservices that are deployed on an edge device as containers.
