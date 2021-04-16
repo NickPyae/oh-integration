@@ -1,6 +1,6 @@
-# Install the Open Horizon Management Hub Services
+# Prerequisites
 
-## Pre-requisites
+1 VM to run Open Horizon Management Hub Services and another VM to run Open Horizon Agent (Anax) which will also run containerized workload or services
 
 ### Open Horizon Management Hub Services (Exchange, Switchboard, AgBots, Sync Service)
 + OS: Ubuntu server, latest build recommended.  Instructions assume this.
