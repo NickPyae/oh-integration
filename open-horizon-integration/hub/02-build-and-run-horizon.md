@@ -1,4 +1,4 @@
-# Build and Run the Open Horizon Management Hub Services
+# Build and Run Open Horizon Management Hub Services
 
 This continues the instructions from [Install the Open Horizon Management Hub Services](01-horizon-services-setup.md).
 
