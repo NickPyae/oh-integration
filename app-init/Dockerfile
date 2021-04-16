@@ -2,10 +2,6 @@ FROM alpine:latest
 
 RUN apk add --update curl && apk add --no-cache bash && rm -rf /var/cache/apk/*
 
-ENV KUIPER_IP ""
-
-ENV KUIPER_PORT "48075"
-
 WORKDIR /app
 
 COPY . .

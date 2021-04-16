@@ -5,7 +5,12 @@
             "url": "com.eos2git.cec.lab.emc.hellosally",
             "variables": {
                 "KUIPER_IP": "$KUIPER_IP",
-                "KUIPER_PORT": "$KUIPER_PORT"
+                "KUIPER_PORT": "$KUIPER_PORT",
+                "INFLUXDB_IP": "$INFLUXDB_IP",
+                "INFLUXDB_PORT": "$INFLUXDB_PORT",
+                "INFLUXDB_TOKEN": "$INFLUXDB_TOKEN",
+                "INFLUXDB_CLOUD_TOKEN": "$INFLUXDB_CLOUD_TOKEN",
+                "BUCKET_NAME": "$BUCKET_NAME"
             }
         }
     ]
