@@ -89,9 +89,9 @@ It should respond with:
 ]
 ```
 
-Export KUIPER_IP and KUIPER_PORT as environment variables to host shell environment so that these env variables can be injected into app-init container during runtime.
+Export the following environment variables to host shell environment so that these env variables can be injected into app-init container during runtime.
 
-NOTE: Replace all these values with correct values of kuiper rule engine VM IP, InfluxDB VM IP, authorization header tokens of InfluxDB and InfluxDB Cloud as well as bucket name depending on the labs you are deploying these services whether it is HOP or Franklin.
+NOTE: Replace all these values with correct values of kuiper rule engine VM IP, InfluxDB VM IP, authorization header tokens of InfluxDB and InfluxDB Cloud, bucket name as well as Redis VM IP, depending on the labs you are deploying these services whether it is HOP or Franklin.
 
 ``` bash
 export KUIPER_IP=x.x.x.x
@@ -101,6 +101,8 @@ export INFLUXDB_PORT=8086
 export INFLUXDB_TOKEN=YOUR_INFLUXDB_TOKEN
 export INFLUXDB_CLOUD_TOKEN=YOUR_INFLUXDB_CLOUD_TOKEN
 export BUCKET_NAME=hello-sally-frk
+export REDIS_IP=x.x.x.x
+export REDIS_PORT=6379
 ```
 
 Last, let's register the openhorizon agent with the hub, so that it will begin executing the service.
