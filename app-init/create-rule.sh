@@ -7,18 +7,21 @@ curl -s -X POST http://${KUIPER_IP}:${KUIPER_PORT}/streams \
   "sql": "create stream edgex() WITH (FORMAT=\"JSON\", TYPE=\"edgex\")"
 }' 2>&1
 
-echo "[Task 2] Creating core_storage_rule rule"
+echo "[Task 2] Creating influx_core_storage_rule"
 curl -s -X POST http://${KUIPER_IP}:${KUIPER_PORT}/rules \
   -H 'Content-Type: application/json' \
   -d '{
-    "id": "core_storage_rule",
-    "sql": "SELECT meta(created) AS created, RandomTemperature FROM edgex",
+    "id": "influx_core_storage_rule",
+    "sql": "SELECT RandomTemperature, meta(created) as created FROM edgex",
     "actions": [
         {
-            "mqtt": {
-                "clientId": "ece-ubuntu-kuiper",
-                "server": "tcp://192.168.1.152:1883",
-                "topic": "oh/kuiper/temp"
+            "rest": {
+                "bodyType": "text",
+                "url": "http://'${INFLUXDB_IP}:${INFLUXDB_PORT}'/api/v2/write?bucket='${BUCKET_NAME}'&org=dell-sg&precision=ms",
+                "method": "POST",
+                "dataTemplate": "hello-sally temperature={{.RandomTemperature}} {{printf \"%.0f\" .created}}",
+                "sendSingle": true,
+                "headers": {"Authorization": "'"${INFLUXDB_TOKEN}"'"}
             }
         },
         {
@@ -27,7 +30,7 @@ curl -s -X POST http://${KUIPER_IP}:${KUIPER_PORT}/rules \
     ]
 }' 2>&1
 
-echo "[Task 3] Creating influx cloud rule"
+echo "[Task 3] Creating influx_cloud_rule"
 curl -s -X POST http://${KUIPER_IP}:${KUIPER_PORT}/rules \
   -H 'Content-Type: application/json' \
   -d '{
@@ -37,11 +40,11 @@ curl -s -X POST http://${KUIPER_IP}:${KUIPER_PORT}/rules \
         {
             "rest": {
                 "bodyType": "text",
-                "url": "https://eastus-1.azure.cloud2.influxdata.com/api/v2/write?bucket=hello-sally&orgID=78d340669c36cc9a&precision=ms",
+                "url": "https://eastus-1.azure.cloud2.influxdata.com/api/v2/write?bucket='${BUCKET_NAME}'&orgID=78d340669c36cc9a&precision=ms",
                 "method": "POST",
                 "dataTemplate": "hello-sally temperature={{.RandomTemperature}} {{printf \"%.0f\" .created}}",
                 "sendSingle": true,
-                "headers": {"Authorization": "Token n_xnacdL6mGdkSaGr4EHgt-csOz49fPbZNLRMKZ0W_L6B8-N7Dd77QrDSzQ_KJHe8ys1zYIUiqGbmV5lxlc25g=="}
+                "headers": {"Authorization": "'"${INFLUXDB_CLOUD_TOKEN}"'"}
             }
         },
         {
@@ -49,6 +52,5 @@ curl -s -X POST http://${KUIPER_IP}:${KUIPER_PORT}/rules \
         }
     ]
 }' 2>&1
-
 
 tail -f /dev/null
