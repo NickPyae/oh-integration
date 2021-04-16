@@ -44,7 +44,7 @@ This step is only required if you are pulling images from private JFrog Artifact
 docker login amaas-eos-mw1.cec.lab.emc.com:5070
 ```
 
-Once it asks for user name and password, use your user name and API Key as password from JFrog Artifactory.
+Once it asks for user name and password, use your service account user name and API Key as password from JFrog Artifactory.
 
 ## Next
 

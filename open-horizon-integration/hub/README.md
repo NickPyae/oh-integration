@@ -39,9 +39,10 @@ You will register the device that is running the Agent as an edge node with the 
 1. [Install the Open Horizon Management Hub Services](01-horizon-services-setup.md)
 2. [Build and Run](02-build-and-run-horizon.md) the Open Horizon Services
 3. [Install the Open Horizon Agent](03-install-agent.md)
-4. [Configure the Agent](04-configure-anax.md)
+4. [Deploy Open Horizon Services](04-deploy-oh-services.md)
 5. [View the Device Data on Agent VM](05-view-device-data.md)
 6. [Exposing Open Horizon Agent API](06-expose-agent-api.md)
+7. [Pushing New Image to Artifactory](07-push-image-artifactory.md)
 
 ## Troubleshooting Guide
 
