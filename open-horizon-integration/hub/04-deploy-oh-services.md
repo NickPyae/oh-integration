@@ -134,7 +134,7 @@ or to see verbose details:
 hzn eventlog list
 ```
 
-And once the agreement is finalized, you should be able to see the containers running:
+And once the agreement is finalized, you should be able to see the containers running on Agent VM:
 
 ``` bash
 sudo docker ps
@@ -142,4 +142,4 @@ sudo docker ps
 
 # Next
 
-[View the Device Data](05-view-device-data.md).
+[Exposing Open Horizon Agent API to Outside](05-expose-agent-api.md).
