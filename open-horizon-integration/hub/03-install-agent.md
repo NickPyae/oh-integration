@@ -97,6 +97,43 @@ Also, verify that the "exchange_version" is correct.
 If it is an empty string, then the agent does not have network connectivity to the exchange.
 You will need to resolve this problem before you continue.
 
+Configure environment variables so the Open Horizon hzn CLI can connect to the exchange from Agent VM.
+
+NOTE: Replace `x.x.x.x` with the actual IP address of the machine running the Open Horizon Management Hub Services.
+
+``` bash
+echo "export HZN_EXCHANGE_URL=http://x.x.x.x:3090/v1" >> ~/.bashrc
+echo "export ORG_ID=dellsg" >> ~/.bashrc
+echo "export HZN_ORG_ID=dellsg" >> ~/.bashrc
+echo "export HZN_EXCHANGE_USER_AUTH=admin:adminpw" >> ~/.bashrc
+source ~/.bashrc
+
+hzn exchange user list
+```
+
+The results of `hzn exchange user list` should be something like the following:
+
+``` json
+{
+  "dellsg/admin": {
+    "admin": true,
+    "email": "admin@dellsg",
+    "lastUpdated": "2019-08-19T12:25:06.754Z[UTC]",
+    "password": "********",
+    "updatedBy": "root/root"
+  }
+}
+```
+
+### Log into Container Registry
+This step is only required if you are pulling images from private JFrog Artifactory. For development and testing of Open Horizon on VirtualBox, this step is not needed.
+
+``` bash
+docker login amaas-eos-mw1.cec.lab.emc.com:5070
+```
+
+Once it asks for user name and password, use your service account user name and API Key as password from JFrog Artifactory.
+
 # Next
 
-[Configure the Agent](04-configure-anax.md).
+[Deploy Open Horizon Services](04-deploy-oh-services.md).

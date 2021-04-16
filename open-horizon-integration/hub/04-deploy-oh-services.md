@@ -1,45 +1,13 @@
-# Configure the Anax Agent VM
-
-This continues the instructions from [Install the Open Horizon Management Hub Services](01-horizon-services-setup.md) and 
-[Build and Run](02-build-and-run-horizon.md) the Open Horizon Management Hub Services and 
-[Install the Open Horizon Agent](03-install-agent.md).
-
-Configure environment variables so the Open Horizon hzn CLI can connect to the exchange from Agent VM.
-
-NOTE: Replace `x.x.x.x` with the actual IP address of the machine running the Open Horizon Management Hub Services.
-
-``` bash
-echo "export HZN_EXCHANGE_URL=http://x.x.x.x:3090/v1" >> ~/.bashrc
-echo "export ORG_ID=dellsg" >> ~/.bashrc
-echo "export HZN_ORG_ID=dellsg" >> ~/.bashrc
-echo "export HZN_EXCHANGE_USER_AUTH=admin:adminpw" >> ~/.bashrc
-source ~/.bashrc
-
-hzn exchange user list
-```
-
-The results of `hzn exchange user list` should be something like the following:
-
-``` json
-{
-  "dellsg/admin": {
-    "admin": true,
-    "email": "admin@dellsg",
-    "lastUpdated": "2019-08-19T12:25:06.754Z[UTC]",
-    "password": "********",
-    "updatedBy": "root/root"
-  }
-}
-```
+# Deploy Open Horizon Services
 
 Before we deploy any services using hzn CLI, there are two options:
 
-1. Deploy all services `ONLY from Management Hub VM` to Agent VM using hzn CLI
-2. Deploy all services from Agent VM itself using hzn CLI. This is default way of deploying open horizon services so far.
+1. Deploy all services from Agent VM itself using hzn CLI. This is default way of deploying open horizon services so far.
+2. Deploy all services `ONLY from Management Hub VM` to Agent VM using hzn CLI
 
-For Option 1, please follow this guide: [Exposing Open Horizon Agent API to Outside](06-expose-agent-api.md) and come back here for the remaining steps below to deploy services.
+For Option 1, you can follow below steps to deploy services from Agent VM.
 
-For Option 2, you can follow the remaining steps below to deploy services.
+For Option 2, please follow this guide: [Exposing Open Horizon Agent API to Outside](06-expose-agent-api.md) and come back here to execute below steps to deploy services from Management Hub VM.
 
 Next we will publish an example EdgeX service to Open Horizon Management hub and then tell the agent to run the service.
 
@@ -47,6 +15,8 @@ Next we will publish an example EdgeX service to Open Horizon Management hub and
 git clone https://eos2git.cec.lab.emc.com/ISG-Edge/HelloSally.git
 cd ./HelloSally
 ```
+
+All the services to be deployed can be found inside `app-integration/servce.json` file.
 
 First, we'll generate an RSA key pair to be used for signing the edge service.
 A service is one or more microservices that are deployed on an edge device as containers.
