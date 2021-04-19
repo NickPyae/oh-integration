@@ -6,6 +6,7 @@ package main
 import (
 	"log"
 	"os"
+	"time"
 
 	"eos2git.cec.lab.emc.com/ISG-Edge/HelloSally/device-random-temperature/api"
 	"eos2git.cec.lab.emc.com/ISG-Edge/HelloSally/device-random-temperature/helpers"
@@ -47,5 +48,22 @@ func main() {
 	scripts.CreateDeviceService()
 	scripts.CreateDevice()
 
+	addDeviceReadings()
 	api.SetRoutes()
+}
+
+func addDeviceReadings() {
+	d := time.Duration(1000)
+	ticker := time.NewTicker(d * time.Millisecond)
+	done := make(chan bool)
+	go func() {
+		for {
+			select {
+			case <-done:
+				return
+			case <-ticker.C:
+				api.AddDeviceReading()
+			}
+		}
+	}()
 }

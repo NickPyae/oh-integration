@@ -32,7 +32,6 @@ func SetRoutes() {
 	// GET
 	r.HandleFunc("/getTemperatureRange", GetTemperatureRangeHandler)
 	r.HandleFunc("/getDeviceReadings", GetDeviceReadingsHandler)
-	r.HandleFunc("/addDeviceReading", AddDeviceReadingHandler)
 
 	// POST
 	r.HandleFunc("/api/v1/device/register", RegisterDeviceHandler)
@@ -149,7 +148,7 @@ func GetDeviceReadingsHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func AddDeviceReadingHandler(w http.ResponseWriter, r *http.Request) {
+func AddDeviceReading() {
 	path := "/api/v1/event"
 
 	var jsonStr = []byte(`{
@@ -163,14 +162,13 @@ func AddDeviceReadingHandler(w http.ResponseWriter, r *http.Request) {
 	req, err := http.NewRequestWithContext(ctx, "POST", helpers.CoreDataURL+path, bytes.NewBuffer(jsonStr))
 	req.Header.Set("Content-Type", "application/json")
 	if err != nil {
-		http.Error(w, "Error", http.StatusInternalServerError)
 		return
 	}
 
 	client := &http.Client{}
 	resp, err := client.Do(req)
 	if err != nil {
-		http.Error(w, "Error", http.StatusInternalServerError)
+		return
 	}
 	defer resp.Body.Close()
 }
