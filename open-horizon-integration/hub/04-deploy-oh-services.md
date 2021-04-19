@@ -7,7 +7,7 @@ Before we deploy any services using hzn CLI, there are two options:
 
 For Option 1, you can follow below steps to deploy services from Agent VM.
 
-For Option 2, please follow this guide: [Exposing Open Horizon Agent API to Outside](06-expose-agent-api.md) and come back here to execute below steps to deploy services from Management Hub VM.
+For Option 2, please follow this guide: [Exposing Open Horizon Agent API to Outside](05-expose-agent-api.md) and come back here to execute below steps to deploy services from Management Hub VM.
 
 Next we will publish an example EdgeX service to Open Horizon Management hub and then tell the agent to run the service.
 
