@@ -11,6 +11,7 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"strconv"
 	"time"
 
 	"github.com/gorilla/mux"
@@ -21,7 +22,8 @@ import (
 )
 
 var (
-	minTemperature, maxTemperature int64 = 50, 200
+	minTemperature, maxTemperature, duration int64 = 50, 200, 1000
+	timer                                    *time.Ticker
 )
 
 func SetRoutes() {
@@ -79,14 +81,36 @@ func RegisterDeviceHandler(w http.ResponseWriter, r *http.Request) {
 func ChangeTemperatureRangeHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method == "PUT" {
 		decoder := json.NewDecoder(r.Body)
-		var t models.TemperatureRange
+		var t models.TemperatureRequest
 		err := decoder.Decode(&t)
 
 		if err != nil {
 			http.Error(w, "Error", http.StatusInternalServerError)
 		} else {
-			minTemperature = t.MinTemperature
-			maxTemperature = t.MaxTemperature
+			minTemperature = t.TemperatureRange.MinTemperature
+			maxTemperature = t.TemperatureRange.MaxTemperature
+			duration = t.Duration // in seconds
+
+			d := time.Duration(duration)
+			if timer != nil {
+				timer.Stop()
+			}
+
+			timer := time.NewTimer(d * time.Second)
+			done := make(chan bool)
+			go func() {
+				for {
+					select {
+					case <-timer.C:
+						minTemperature, _ = strconv.ParseInt(helpers.DefaultMinTemperature, 10, 64)
+						maxTemperature, _ = strconv.ParseInt(helpers.DefaultMaxTemperature, 10, 64)
+
+						timer.Stop()
+					case <-done:
+						return
+					}
+				}
+			}()
 
 			fmt.Fprint(w, "Command accepted")
 		}

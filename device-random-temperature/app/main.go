@@ -14,7 +14,6 @@ import (
 )
 
 func main() {
-
 	if os.Getenv("CORE_SVCS_IP") == "" || os.Getenv("DEVICE_SVC_IP") == "" {
 		log.Println("Please ensure env variables 'CORE_SVCS_IP' and 'DEVICE_SVC_IP' is present.")
 		os.Exit(1)
