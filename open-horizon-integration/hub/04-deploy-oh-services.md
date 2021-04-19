@@ -85,7 +85,7 @@ It should respond with:
 
 ``` json
 [
-  "dellsg/pattern-edgex-amd64"
+  "dellsg/pattern-hellosally-amd64"
 ]
 ```
 
@@ -108,7 +108,7 @@ export REDIS_PORT=6379
 Last, let's register the openhorizon agent with the hub, so that it will begin executing the service.
 
 ``` bash
-hzn register -p pattern-edgex-amd64 --policy app-integration/node.policy.json -f app-integration/userinput.json
+hzn register -p pattern-hellosally-amd64 --policy app-integration/node.policy.json -f app-integration/userinput.json
 ```
 
 The argument, -f app-integration/userinput.json informs the registration command to use the userinput file to start any configuration variables that are used by any of the services in the registered deployment pattern. The file provides configuration variable values at registration time. When you pass this file on the hzn register ... -f ... command line, the hzn command first runs envsubst to enhance the file by extracting values from the host shell environment. 
@@ -120,7 +120,7 @@ hzn node list
 ```
 
 and confirm that the response shows your node ID. 
-and that you're configured for the `dellsg/pattern-edgex-amd64` pattern.
+and that you're configured for the `dellsg/pattern-hellosally-amd64` pattern.
 
 To check on the status of the agreement, use:
 

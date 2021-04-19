@@ -1,5 +1,9 @@
 {
   "properties": [
+    { 
+      "name": "tag", 
+      "value": "hellosally" 
+    },
     {
       "name": "openhorizon.allowPrivileged",
       "value": true
