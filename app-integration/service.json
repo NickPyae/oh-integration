@@ -1,7 +1,7 @@
 {
   "org": "${HZN_ORG_ID}",
-  "label": "edgex",
-  "description": "EdgeX Foundry service",
+  "label": "HelloSally",
+  "description": "HelloSally Services",
   "documentation": "",
   "url": "com.eos2git.cec.lab.emc.hellosally",
   "version": "0.0.1",

@@ -1,7 +1,7 @@
 {
-  "name": "pattern-edgex-amd64",
-  "label": "Edgex services on amd64",
-  "description": "Pattern for Edgex services on amd64",
+  "name": "pattern-hellosally-amd64",
+  "label": "HelloSally services on amd64",
+  "description": "Pattern for hellosally services on amd64",
   "services": [
     {
       "serviceUrl": "com.eos2git.cec.lab.emc.hellosally",
@@ -14,13 +14,5 @@
       ]
     }
   ],
-  "userInput": [
-    {
-      "serviceOrgId": "dellsg",
-      "serviceUrl": "com.eos2git.cec.lab.emc.hellosally",
-      "serviceArch": "amd64",
-      "serviceVersionRange": "[0.0.0,INFINITY)",
-      "inputs": []
-    }
-  ]
+  "userInput": []
 }

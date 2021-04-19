@@ -1,0 +1,20 @@
+{
+    "label": "HelloSally Deployment Policy",
+    "description": "A super-simple sample Horizon Deployment Policy",
+    "service": {
+      "name": "com.eos2git.cec.lab.emc.hellosally",
+      "org": "dellsg",
+      "arch": "amd64",
+      "serviceVersions": [
+        {
+            "version": "0.0.1"
+        }
+      ]
+    },
+    "properties": [
+    ],
+    "constraints": [
+      "tag == hellosally"
+    ],
+    "userInput": []
+}
