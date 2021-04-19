@@ -67,9 +67,36 @@ The above should respond with the following, if successful:
 ]
 ```
 
-Next, publish a _pattern_ to the exchange.
+Export the following environment variables to host shell environment so that these env variables can be injected into app-init container during runtime.
+
+NOTE: Replace all these values with correct values of kuiper rule engine VM IP, InfluxDB VM IP, authorization header tokens of InfluxDB and InfluxDB Cloud, bucket name as well as Redis VM IP, depending on the labs you are deploying these services whether it is HOP or Franklin.
+
+``` bash
+export KUIPER_IP=x.x.x.x
+export KUIPER_PORT=48075
+export INFLUXDB_IP=x.x.x.x 
+export INFLUXDB_PORT=8086
+export INFLUXDB_TOKEN=YOUR_INFLUXDB_TOKEN
+export INFLUXDB_CLOUD_TOKEN=YOUR_INFLUXDB_CLOUD_TOKEN
+export BUCKET_NAME=hello-sally-frk
+export REDIS_IP=x.x.x.x
+export REDIS_PORT=6379
+```
+
+Open Horizon Agent manages containerized services on their nodes using following mechanisms: 
+
+1. Using a pattern
+   * Directly specify which services to run
+2. Using a deployment policy
+   * Constraint-based resolution to determine deployment  
+
+You can either use one of these approaches to deploy your services to Open Horizon Agent nodes. Please, keep in mind that you cannot use both at the same time. Regarding pattern mechanism, only one pattern can be active one same node. However, you can have multiple deployment policies on same node. 
+
+
+### Deploying services using Pattern
+
+Publishing a _pattern_ to the exchange.
 A pattern is the easiest way for a node to indicate which services it should run.
-Policy based service deployment is also supported, but is slightly more complex to setup.
 
 ```
 hzn exchange pattern publish -f app-integration/pattern.json
@@ -89,23 +116,7 @@ It should respond with:
 ]
 ```
 
-Export the following environment variables to host shell environment so that these env variables can be injected into app-init container during runtime.
-
-NOTE: Replace all these values with correct values of kuiper rule engine VM IP, InfluxDB VM IP, authorization header tokens of InfluxDB and InfluxDB Cloud, bucket name as well as Redis VM IP, depending on the labs you are deploying these services whether it is HOP or Franklin.
-
-``` bash
-export KUIPER_IP=x.x.x.x
-export KUIPER_PORT=48075
-export INFLUXDB_IP=x.x.x.x 
-export INFLUXDB_PORT=8086
-export INFLUXDB_TOKEN=YOUR_INFLUXDB_TOKEN
-export INFLUXDB_CLOUD_TOKEN=YOUR_INFLUXDB_CLOUD_TOKEN
-export BUCKET_NAME=hello-sally-frk
-export REDIS_IP=x.x.x.x
-export REDIS_PORT=6379
-```
-
-Last, let's register the openhorizon agent with the hub, so that it will begin executing the service.
+Last, let's register Open Horizon Agent with the hub so that it will begin executing the service.
 
 ``` bash
 hzn register -p pattern-hellosally-amd64 --policy app-integration/node.policy.json -f app-integration/userinput.json
@@ -125,14 +136,16 @@ and that you're configured for the `dellsg/pattern-hellosally-amd64` pattern.
 To check on the status of the agreement, use:
 
 ``` bash
-hzn agreement list
+hzn agreement list or watch hzn agreement list
 ```
 
 or to see verbose details:
 
 ``` bash 
-hzn eventlog list
+hzn eventlog list or watch hzn eventlog list
 ```
+
+Normally, this takes about 30 to 40 sec to see the agreement list, deploy and run all services on agent node.
 
 And once the agreement is finalized, you should be able to see the containers running on Agent VM:
 
@@ -152,6 +165,40 @@ From Agent VM, run
 ``` bash
 hzn unregister -D
 ```
+
+### Deploying services using Deployment Policy
+
+Register Open Horizon Agent with the hub by providing node policy and user input.
+
+``` bash
+hzn register --policy app-integration/node.policy.json -f app-integration/userinput.json
+```
+
+Add deployment policy to exchange.
+
+``` bash
+hzn exchange business addpolicy -f app-integration/deployment.policy.json hellosally
+```
+
+To check on the status of the agreement, use:
+
+``` bash
+hzn agreement list or watch hzn agreement list
+```
+
+or to see verbose details:
+
+``` bash 
+hzn eventlog list or watch hzn eventlog list
+```
+
+And once the agreement is finalized, you should be able to see the containers running on Agent VM:
+
+``` bash
+sudo docker ps
+```
+
+Normally, this takes about 30 to 40 sec to see the agreement list, deploy and run all services on agent node.
 
 # Next
 
