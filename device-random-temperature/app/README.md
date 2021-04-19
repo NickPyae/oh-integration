@@ -119,6 +119,6 @@ https://<core-svcs-ip>:<core-command-port>/api/v1/device/<device-id>/command/<co
         "MinTemperature": 10,
         "MaxTemperature": 100
     },
-    "Duration": 3 // seconds
+    "Duration": 3
 }
 ```
