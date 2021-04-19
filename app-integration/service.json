@@ -13,7 +13,7 @@
   "deployment": {
     "services": {
       "edgex-redis": {
-        "image": "amaas-eos-mw1.cec.lab.emc.com:5070/hellosally/redislabs/redisgears:latest",
+        "image": "amaas-eos-mw1.cec.lab.emc.com:5070/hellosally/redislabs/redismod:latest",
         "privileged": true,
         "binds": [
           "db-data:/data/db"

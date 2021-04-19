@@ -13,7 +13,7 @@
   "deployment": {
     "services": {
       "edgex-redis": {
-        "image": "redislabs/redisgears:latest",
+        "image": "redislabs/redismod:latest",
         "privileged": true,
         "binds": [
           "db-data:/data/db"
