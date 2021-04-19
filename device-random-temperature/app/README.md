@@ -115,7 +115,10 @@ https://<core-svcs-ip>:<core-command-port>/api/v1/device
 https://<core-svcs-ip>:<core-command-port>/api/v1/device/<device-id>/command/<command-id>
 
 {
-    "MinTemperature": 90,
-    "MaxTemperature": 100
+    "range": {
+        "MinTemperature": 10,
+        "MaxTemperature": 100
+    },
+    "Duration": 3 // seconds
 }
 ```
