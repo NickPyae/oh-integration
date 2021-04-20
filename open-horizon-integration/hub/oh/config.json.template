@@ -70,6 +70,20 @@
       "password": "",
       "database": "exchange",
       "volume": "exchangedb"
+    },
+    "sdo": {
+      "name": "sdo-owner-services",
+      "image": "openhorizon/sdo-owner-services",
+      "tag": "latest",
+      "ocsApiPort": 9008,
+      "rvPort": 8040,
+      "opsExternalPort": "8042",
+      "opsPort": "8042",
+      "ocsDbPath": "/home/sdouser/ocs/config/db",
+      "hznTransport": "http",
+      "hznListenIp" : "${MY_IP}",
+      "exchangeUserOrg": "dellsg",
+      "agentInstallUrl": "https://github.com/open-horizon/anax/releases/latest/download/agent-install.sh"
     }
   }
 }
