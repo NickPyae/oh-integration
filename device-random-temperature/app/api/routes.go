@@ -86,34 +86,36 @@ func ChangeTemperatureRangeHandler(w http.ResponseWriter, r *http.Request) {
 
 		if err != nil {
 			http.Error(w, "Error", http.StatusInternalServerError)
-		} else {
-			minTemperature = t.TemperatureRange.MinTemperature
-			maxTemperature = t.TemperatureRange.MaxTemperature
-			duration = t.Duration // in seconds
-
-			d := time.Duration(duration)
-			if timer != nil {
-				timer.Stop()
-			}
-
-			timer := time.NewTimer(d * time.Second)
-			done := make(chan bool)
-			go func() {
-				for {
-					select {
-					case <-timer.C:
-						minTemperature, _ = strconv.ParseInt(helpers.DefaultMinTemperature, 10, 64)
-						maxTemperature, _ = strconv.ParseInt(helpers.DefaultMaxTemperature, 10, 64)
-
-						timer.Stop()
-					case <-done:
-						return
-					}
-				}
-			}()
-
-			fmt.Fprint(w, "Command accepted")
+			return
 		}
+
+		minTemperature = t.TemperatureRange.MinTemperature
+		maxTemperature = t.TemperatureRange.MaxTemperature
+		duration = t.Duration // in seconds
+
+		d := time.Duration(duration)
+		if timer != nil {
+			timer.Stop()
+		}
+
+		timer := time.NewTimer(d * time.Second)
+		done := make(chan bool)
+		go func() {
+			for {
+				select {
+				case <-timer.C:
+					minTemperature, _ = strconv.ParseInt(helpers.DefaultMinTemperature, 10, 64)
+					maxTemperature, _ = strconv.ParseInt(helpers.DefaultMaxTemperature, 10, 64)
+
+					timer.Stop()
+				case <-done:
+					return
+				}
+			}
+		}()
+
+		fmt.Fprint(w, "Command accepted")
+
 	} else {
 		http.Error(w, "Invalid request method", http.StatusMethodNotAllowed)
 	}
