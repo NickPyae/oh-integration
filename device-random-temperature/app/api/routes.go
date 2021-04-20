@@ -11,8 +11,10 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"strconv"
 	"time"
 
+	"github.com/go-playground/validator"
 	"github.com/gorilla/mux"
 
 	"eos2git.cec.lab.emc.com/ISG-Edge/HelloSally/device-random-temperature/models"
@@ -21,7 +23,9 @@ import (
 )
 
 var (
-	minTemperature, maxTemperature int64 = 50, 200
+	minTemperature, maxTemperature, duration int64 = 50, 200, 10
+	timer                                    *time.Ticker
+	validate                                 *validator.Validate
 )
 
 func SetRoutes() {
@@ -32,7 +36,6 @@ func SetRoutes() {
 	// GET
 	r.HandleFunc("/getTemperatureRange", GetTemperatureRangeHandler)
 	r.HandleFunc("/getDeviceReadings", GetDeviceReadingsHandler)
-	r.HandleFunc("/addDeviceReading", AddDeviceReadingHandler)
 
 	// POST
 	r.HandleFunc("/api/v1/device/register", RegisterDeviceHandler)
@@ -80,17 +83,49 @@ func RegisterDeviceHandler(w http.ResponseWriter, r *http.Request) {
 func ChangeTemperatureRangeHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method == "PUT" {
 		decoder := json.NewDecoder(r.Body)
-		var t models.TemperatureRange
-		err := decoder.Decode(&t)
+		var t models.TemperatureRequest
+		decodeErr := decoder.Decode(&t)
 
-		if err != nil {
-			http.Error(w, "Error", http.StatusInternalServerError)
-		} else {
-			minTemperature = t.MinTemperature
-			maxTemperature = t.MaxTemperature
-
-			fmt.Fprint(w, "Command accepted")
+		if decodeErr != nil {
+			// checks for field type
+			http.Error(w, "invalid parameters", http.StatusInternalServerError)
+			return
 		}
+
+		validate = validator.New()
+		validateErr := validate.Struct(t)
+		if validateErr != nil {
+			// checks for validators
+			http.Error(w, "invalid parameters", http.StatusInternalServerError)
+			return
+		}
+
+		minTemperature = t.TemperatureRange.MinTemperature
+		maxTemperature = t.TemperatureRange.MaxTemperature
+		duration = t.Duration // in seconds
+
+		d := time.Duration(duration)
+		if timer != nil {
+			timer.Stop()
+		}
+
+		timer := time.NewTimer(d * time.Second)
+		done := make(chan bool)
+		go func() {
+			for {
+				select {
+				case <-timer.C:
+					minTemperature, _ = strconv.ParseInt(helpers.DefaultMinTemperature, 10, 64)
+					maxTemperature, _ = strconv.ParseInt(helpers.DefaultMaxTemperature, 10, 64)
+
+					timer.Stop()
+				case <-done:
+					return
+				}
+			}
+		}()
+
+		fmt.Fprint(w, "Command accepted")
 	} else {
 		http.Error(w, "Invalid request method", http.StatusMethodNotAllowed)
 	}
@@ -149,7 +184,7 @@ func GetDeviceReadingsHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func AddDeviceReadingHandler(w http.ResponseWriter, r *http.Request) {
+func AddDeviceReading() {
 	path := "/api/v1/event"
 
 	var jsonStr = []byte(`{
@@ -163,14 +198,13 @@ func AddDeviceReadingHandler(w http.ResponseWriter, r *http.Request) {
 	req, err := http.NewRequestWithContext(ctx, "POST", helpers.CoreDataURL+path, bytes.NewBuffer(jsonStr))
 	req.Header.Set("Content-Type", "application/json")
 	if err != nil {
-		http.Error(w, "Error", http.StatusInternalServerError)
 		return
 	}
 
 	client := &http.Client{}
 	resp, err := client.Do(req)
 	if err != nil {
-		http.Error(w, "Error", http.StatusInternalServerError)
+		return
 	}
 	defer resp.Body.Close()
 }

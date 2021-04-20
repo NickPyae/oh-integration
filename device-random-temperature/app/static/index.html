@@ -39,12 +39,6 @@
         <script>
             (function(){
                 $.getJSON(
-                    "/addDeviceReading",
-                    function(data) {
-                        console.log(data)
-                    }
-                );
-                $.getJSON(
                     "/getTemperatureRange",
                     function(data) {
                         $("#minTemperature").html(data.minTemperature);

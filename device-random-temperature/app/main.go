@@ -6,6 +6,7 @@ package main
 import (
 	"log"
 	"os"
+	"time"
 
 	"eos2git.cec.lab.emc.com/ISG-Edge/HelloSally/device-random-temperature/api"
 	"eos2git.cec.lab.emc.com/ISG-Edge/HelloSally/device-random-temperature/helpers"
@@ -13,7 +14,6 @@ import (
 )
 
 func main() {
-
 	if os.Getenv("CORE_SVCS_IP") == "" || os.Getenv("DEVICE_SVC_IP") == "" {
 		log.Println("Please ensure env variables 'CORE_SVCS_IP' and 'DEVICE_SVC_IP' is present.")
 		os.Exit(1)
@@ -47,5 +47,23 @@ func main() {
 	scripts.CreateDeviceService()
 	scripts.CreateDevice()
 
+	addDeviceReadings()
 	api.SetRoutes()
+}
+
+func addDeviceReadings() {
+	i := 1000
+	d := time.Duration(i)
+	ticker := time.NewTicker(d * time.Millisecond)
+	done := make(chan bool)
+	go func() {
+		for {
+			select {
+			case <-done:
+				return
+			case <-ticker.C:
+				api.AddDeviceReading()
+			}
+		}
+	}()
 }
