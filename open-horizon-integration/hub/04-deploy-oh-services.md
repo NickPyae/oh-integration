@@ -69,7 +69,7 @@ The above should respond with the following, if successful:
 
 Export the following environment variables to host shell environment so that these env variables can be injected into app-init container during runtime.
 
-NOTE: Replace all these values with correct values of kuiper rule engine VM IP, InfluxDB VM IP, authorization header tokens of InfluxDB and InfluxDB Cloud, bucket name as well as Redis VM IP, depending on the labs you are deploying these services whether it is HOP or Franklin.
+NOTE: Replace all these values with correct values of kuiper rule engine VM IP, InfluxDB VM IP, authorization header tokens of InfluxDB and InfluxDB Cloud, bucket name as well as Redis VM IP, depending on the labs you are deploying these services whether it is HOP or Franklin. Refer to this [Confluence Page](https://confluence.cec.lab.emc.com/pages/viewpage.action?spaceKey=ISGPDE&title=Technical+Specifications) for Physical View of HOP Lab and Franklin Lab to check IP addresses of KUIPER and REDIS services. KUIPER and REDIS services are part of FarEdge ECE. Please, use IP of ECE for both KUIPER and REDIS.
 
 ``` bash
 export KUIPER_IP=x.x.x.x
@@ -172,6 +172,10 @@ Register Open Horizon Agent with the hub by providing node policy and user input
 
 ``` bash
 hzn register --policy app-integration/node.policy.json -f app-integration/userinput.json
+or 
+hzn register
+hzn policy update -f app-integration/node.policy.json
+hzn userinput add -f app-integration/userinput.json
 ```
 
 Add deployment policy to exchange.
