@@ -4,6 +4,6 @@
 package models
 
 type TemperatureRequest struct {
-	TemperatureRange TemperatureRange `json:"range"`
-	Duration         int64            `json:"duration"`
+	TemperatureRange TemperatureRange `json:"range" validate:"required"`
+	Duration         int64            `json:"duration" validate:"required,min=2"`
 }

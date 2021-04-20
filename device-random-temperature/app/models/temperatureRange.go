@@ -4,6 +4,6 @@
 package models
 
 type TemperatureRange struct {
-	MinTemperature int64 `json:"minTemperature"`
-	MaxTemperature int64 `json:"maxTemperature"`
+	MinTemperature int64 `json:"minTemperature" validate:"required,max=10000,min=-459"`
+	MaxTemperature int64 `json:"maxTemperature" validate:"required,max=10000,min=-459,gtefield=MinTemperature"`
 }

@@ -52,7 +52,8 @@ func main() {
 }
 
 func addDeviceReadings() {
-	d := time.Duration(1000)
+	i := 1000
+	d := time.Duration(i)
 	ticker := time.NewTicker(d * time.Millisecond)
 	done := make(chan bool)
 	go func() {

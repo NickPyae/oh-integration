@@ -14,6 +14,7 @@ import (
 	"strconv"
 	"time"
 
+	"github.com/go-playground/validator"
 	"github.com/gorilla/mux"
 
 	"eos2git.cec.lab.emc.com/ISG-Edge/HelloSally/device-random-temperature/models"
@@ -22,8 +23,9 @@ import (
 )
 
 var (
-	minTemperature, maxTemperature, duration int64 = 50, 200, 1000
+	minTemperature, maxTemperature, duration int64 = 50, 200, 10
 	timer                                    *time.Ticker
+	validate                                 *validator.Validate
 )
 
 func SetRoutes() {
@@ -82,10 +84,19 @@ func ChangeTemperatureRangeHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method == "PUT" {
 		decoder := json.NewDecoder(r.Body)
 		var t models.TemperatureRequest
-		err := decoder.Decode(&t)
+		decodeErr := decoder.Decode(&t)
 
-		if err != nil {
-			http.Error(w, "Error", http.StatusInternalServerError)
+		if decodeErr != nil {
+			// checks for field type
+			http.Error(w, "invalid parameters", http.StatusInternalServerError)
+			return
+		}
+
+		validate = validator.New()
+		validateErr := validate.Struct(t)
+		if validateErr != nil {
+			// checks for validators
+			http.Error(w, "invalid parameters", http.StatusInternalServerError)
 			return
 		}
 
@@ -115,7 +126,6 @@ func ChangeTemperatureRangeHandler(w http.ResponseWriter, r *http.Request) {
 		}()
 
 		fmt.Fprint(w, "Command accepted")
-
 	} else {
 		http.Error(w, "Invalid request method", http.StatusMethodNotAllowed)
 	}
