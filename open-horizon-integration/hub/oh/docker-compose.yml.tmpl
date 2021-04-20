@@ -7,6 +7,7 @@ version: '3'
 volumes:
   ${EXCHANGEDB_VOLUME_NAME}:
   ${CSSDB_VOLUME_NAME}:
+  ${OCS_VOLUME_NAME}:
 
 ###
 ### NETWORKS
@@ -128,7 +129,7 @@ services:
         aliases:
           - ${HZN_NAMESPACE}-sdo-owner-service
     volumes:
-      - ocsdb:${SDO_OCS_DB_PATH}
+      - ${OCS_VOLUME_NAME}:${SDO_OCS_DB_PATH}
     # intentionally omitting HZN_MGMT_HUB_CERT from the environment section, since we use http in this environment
     environment:
       - HZN_EXCHANGE_URL=${HZN_TRANSPORT}://${HZN_LISTEN_IP}:${EXCHANGE_PORT}/v1

@@ -113,6 +113,7 @@ SDO_OCS_DB_PATH := $(shell jq -r '.services.sdo.ocsDbPath' config.json)
 HZN_TRANSPORT := $(shell jq -r '.services.sdo.hznTransport' config.json)
 EXCHANGE_USER_ORG := $(shell jq -r '.services.sdo.exchangeUserOrg' config.json)
 AGENT_INSTALL_URL := $(shell jq -r '.services.sdo.agentInstallUrl' config.json)
+OCS_VOLUME_NAME := $(shell jq -r '.services.sdo.ocsVolume' config.json)
 
 ## AGBOT
 AGBOT_KEYS_DIR := ${PWD}/certs
@@ -260,6 +261,7 @@ ${CONFIGS}: config.json makefile
 	  HZN_TRANSPORT='${HZN_TRANSPORT}' \
 	  EXCHANGE_USER_ORG='${EXCHANGE_USER_ORG}' \
 	  AGENT_INSTALL_URL='${AGENT_INSTALL_URL}' \
+	  OCS_VOLUME_NAME='${OCS_VOLUME_NAME}' \
 	  && cat $${F}.tmpl | envsubst > $@
 
 ## ADMINISTRIVIA

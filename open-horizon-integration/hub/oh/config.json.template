@@ -74,6 +74,7 @@
     "sdo": {
       "name": "sdo-owner-services",
       "image": "openhorizon/sdo-owner-services",
+      "ocsVolume": "ocsdb",
       "tag": "latest",
       "ocsApiPort": 9008,
       "rvPort": 8040,
