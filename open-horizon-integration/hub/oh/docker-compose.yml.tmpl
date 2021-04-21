@@ -7,6 +7,7 @@ version: '3'
 volumes:
   ${EXCHANGEDB_VOLUME_NAME}:
   ${CSSDB_VOLUME_NAME}:
+  ${OCS_VOLUME_NAME}:
 
 ###
 ### NETWORKS
@@ -112,3 +113,35 @@ services:
       ${HZN_NETWORK}:
         aliases:
           - ${HZN_NAMESPACE}-css-db
+  ##
+  ## sdo-owner-services
+  ##
+  sdo-owner-services:
+    image: ${SDO_IMAGE_NAME}:${SDO_IMAGE_TAG}
+    container_name: ${SDO_CONTAINER_NAME}
+    restart: always
+    ports:
+      - ${HZN_LISTEN_IP}:${SDO_OCS_API_PORT}:${SDO_OCS_API_PORT}
+      - ${HZN_LISTEN_IP}:${SDO_RV_PORT}:${SDO_RV_PORT}
+      - ${HZN_LISTEN_IP}:${SDO_OPS_EXTERNAL_PORT}:${SDO_OPS_PORT}
+    networks:
+      ${HZN_NETWORK}:
+        aliases:
+          - ${HZN_NAMESPACE}-sdo-owner-service
+    volumes:
+      - ${OCS_VOLUME_NAME}:${SDO_OCS_DB_PATH}
+    # intentionally omitting HZN_MGMT_HUB_CERT from the environment section, since we use http in this environment
+    environment:
+      - HZN_EXCHANGE_URL=${HZN_TRANSPORT}://${HZN_LISTEN_IP}:${EXCHANGE_PORT}/v1
+      - EXCHANGE_INTERNAL_URL=${HZN_TRANSPORT}://exchange-api:8080/v1
+      - HZN_FSS_CSSURL=${HZN_TRANSPORT}://${HZN_LISTEN_IP}:${CSS_PORT}/
+      - HZN_ORG_ID=${EXCHANGE_USER_ORG}
+      - SDO_OWNER_SVC_HOST=${HZN_LISTEN_IP}
+      - SDO_OCS_API_PORT=${SDO_OCS_API_PORT}
+      - SDO_RV_PORT=${SDO_RV_PORT}
+      - SDO_OPS_PORT=${SDO_OPS_PORT}
+      - SDO_OPS_EXTERNAL_PORT=${SDO_OPS_EXTERNAL_PORT}
+      - SDO_OCS_DB_PATH=${SDO_OCS_DB_PATH}
+      - AGENT_INSTALL_URL=${AGENT_INSTALL_URL}
+    depends_on:
+      - exchange-api

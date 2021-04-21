@@ -100,6 +100,21 @@ CSSDB_CONTAINER_IMAGE := $(shell jq -r '.services.cssdb.image' config.json)
 CSSDB_CONTAINER_TAG := $(shell jq -r '.services.cssdb.tag' config.json)
 CSSDB_VOLUME_NAME := $(shell jq -r '.services.cssdb.volume' config.json)
 
+## SDO OWNER SERVICES
+SDO_CONTAINER_NAME := $(shell jq -r '.services.sdo.name' config.json)
+SDO_IMAGE_NAME := $(shell jq -r '.services.sdo.image' config.json)
+SDO_IMAGE_TAG := $(shell jq -r '.services.sdo.tag' config.json)
+HZN_LISTEN_IP := $(shell jq -r '.services.sdo.hznListenIp' config.json)
+SDO_OCS_API_PORT := $(shell jq -r '.services.sdo.ocsApiPort' config.json)
+SDO_RV_PORT := $(shell jq -r '.services.sdo.rvPort' config.json)
+SDO_OPS_EXTERNAL_PORT := $(shell jq -r '.services.sdo.opsExternalPort' config.json)
+SDO_OPS_PORT := $(shell jq -r '.services.sdo.opsPort' config.json)
+SDO_OCS_DB_PATH := $(shell jq -r '.services.sdo.ocsDbPath' config.json)
+HZN_TRANSPORT := $(shell jq -r '.services.sdo.hznTransport' config.json)
+EXCHANGE_USER_ORG := $(shell jq -r '.services.sdo.exchangeUserOrg' config.json)
+AGENT_INSTALL_URL := $(shell jq -r '.services.sdo.agentInstallUrl' config.json)
+OCS_VOLUME_NAME := $(shell jq -r '.services.sdo.ocsVolume' config.json)
+
 ## AGBOT
 AGBOT_KEYS_DIR := ${PWD}/certs
 AGBOT_KEYS_KEY := ${AGBOT_KEYS_DIR}/domain.key 
@@ -234,6 +249,19 @@ ${CONFIGS}: config.json makefile
 	  POSTGRES_PASSWORD='${POSTGRES_PASSWORD}' \
 	  POSTGRES_USER='${POSTGRES_USER}' \
 	  POSTGRES_DATABASE='${POSTGRES_DATABASE}' \
+	  SDO_CONTAINER_NAME='${SDO_CONTAINER_NAME}' \
+	  SDO_IMAGE_NAME='${SDO_IMAGE_NAME}' \
+	  SDO_IMAGE_TAG='${SDO_IMAGE_TAG}' \
+	  HZN_LISTEN_IP='${HZN_LISTEN_IP}' \
+	  SDO_OCS_API_PORT='${SDO_OCS_API_PORT}' \
+	  SDO_RV_PORT='${SDO_RV_PORT}' \
+	  SDO_OPS_EXTERNAL_PORT='${SDO_OPS_EXTERNAL_PORT}' \
+	  SDO_OPS_PORT='${SDO_OPS_PORT}' \
+	  SDO_OCS_DB_PATH='${SDO_OCS_DB_PATH}' \
+	  HZN_TRANSPORT='${HZN_TRANSPORT}' \
+	  EXCHANGE_USER_ORG='${EXCHANGE_USER_ORG}' \
+	  AGENT_INSTALL_URL='${AGENT_INSTALL_URL}' \
+	  OCS_VOLUME_NAME='${OCS_VOLUME_NAME}' \
 	  && cat $${F}.tmpl | envsubst > $@
 
 ## ADMINISTRIVIA
@@ -246,6 +274,7 @@ remove:
 	-docker rm -f "$(CSS_CONTAINER_NAME)"
 	-docker rm -f "$(EXCHANGEDB_CONTAINER_NAME)"
 	-docker rm -f "$(CSSDB_CONTAINER_NAME)"
+	-docker rm -f "$(SDO_CONTAINER_NAME)"
 
 remove-images: remove
 	-docker rmi $(AGBOT_CONTAINER_IMAGE):$(AGBOT_CONTAINER_TAG)
@@ -253,6 +282,7 @@ remove-images: remove
 	-docker rmi $(EXCHANGEDB_CONTAINER_IMAGE):$(EXCHANGEDB_CONTAINER_TAG)
 	-docker rmi $(CSS_CONTAINER_IMAGE):$(CSS_CONTAINER_TAG)
 	-docker rmi $(CSSDB_CONTAINER_IMAGE):$(CSSDB_CONTAINER_TAG)
+	-docker rmi $(SDO_IMAGE_NAME):$(SDO_IMAGE_TAG)
 
 reset-db:
 	-export \
