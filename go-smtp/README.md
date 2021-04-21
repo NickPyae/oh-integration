@@ -42,10 +42,21 @@ Notes:
 export HS_USER_EMAIL=<RECEIVER_EMAIL_1>,<RECEIVER_EMAIL_2>,<RECEIVER_EMAIL_3>
 ```
 
-## Run
+If deploying on Docker, we can specify environment variables using a `.env` file. Make a copy of `default.env` and edit the values accordingly.
+```sh
+cp default.env .env
+```
+
+## Deploy Natively
 ```sh
 git clone https://eos2git.cec.lab.emc.com/ISG-Edge/HelloSally.git
 cd HelloSally/go-smtp
 go mod tidy
 go run main.go
+```
+
+## Deploy on Docker
+```sh
+docker build -t email-alert:0.0.1 .
+docker run --name email-alert-service -d --env-file .env email-alert:0.0.1
 ```
