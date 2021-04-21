@@ -274,6 +274,7 @@ remove:
 	-docker rm -f "$(CSS_CONTAINER_NAME)"
 	-docker rm -f "$(EXCHANGEDB_CONTAINER_NAME)"
 	-docker rm -f "$(CSSDB_CONTAINER_NAME)"
+	-docker rm -f "$(SDO_CONTAINER_NAME)"
 
 remove-images: remove
 	-docker rmi $(AGBOT_CONTAINER_IMAGE):$(AGBOT_CONTAINER_TAG)
@@ -281,6 +282,7 @@ remove-images: remove
 	-docker rmi $(EXCHANGEDB_CONTAINER_IMAGE):$(EXCHANGEDB_CONTAINER_TAG)
 	-docker rmi $(CSS_CONTAINER_IMAGE):$(CSS_CONTAINER_TAG)
 	-docker rmi $(CSSDB_CONTAINER_IMAGE):$(CSSDB_CONTAINER_TAG)
+	-docker rmi $(SDO_IMAGE_NAME):$(SDO_IMAGE_TAG)
 
 reset-db:
 	-export \
