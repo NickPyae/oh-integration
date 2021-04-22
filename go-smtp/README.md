@@ -57,19 +57,19 @@ docker build -t amaas-eos-mw1.cec.lab.emc.com:5070/hellosally/email-alert:0.0.1 
 docker push amaas-eos-mw1.cec.lab.emc.com:5070/hellosally/email-alert:0.0.1
 ```
 
-Load Docker image in Azure VM
+Since Azure cannot access artifactory, we have to manually save and load the Docker image into Azure.
 ```sh
 docker save amaas-eos-mw1.cec.lab.emc.com:5070/hellosally/email-alert:0.0.1 > email-alert.tar
 scp email-alert.tar <USER>@<AZURE_VM_IP>:~/
+
+# Inside Azure VM
 docker load < email-alert.tar
 ```
 
-We can specify environment variables using a `.env` file. Make a copy of `default.env` and edit the values accordingly. (See [Configuration](#configuration))
+We can specify environment variables using a `.env` file. Prior to running the container, make a copy of `default.env` and edit the values accordingly. (See [Configuration](#configuration))
 ```sh
 cp default.env .env
-```
 
-Now run the container
-```sh
+# Run
 docker run --name email-alert-service -d --env-file .env amaas-eos-mw1.cec.lab.emc.com:5070/hellosally/email-alert:0.0.1
 ```
