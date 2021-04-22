@@ -42,10 +42,34 @@ Notes:
 export HS_USER_EMAIL=<RECEIVER_EMAIL_1>,<RECEIVER_EMAIL_2>,<RECEIVER_EMAIL_3>
 ```
 
-## Run
+## Deploy Natively
 ```sh
 git clone https://eos2git.cec.lab.emc.com/ISG-Edge/HelloSally.git
 cd HelloSally/go-smtp
 go mod tidy
 go run main.go
+```
+
+## Deploy on Docker
+Build and push image to artifactory
+```sh
+docker build -t amaas-eos-mw1.cec.lab.emc.com:5070/hellosally/email-alert:0.0.1 .
+docker push amaas-eos-mw1.cec.lab.emc.com:5070/hellosally/email-alert:0.0.1
+```
+
+Since Azure cannot access artifactory, we have to manually save and load the Docker image into Azure.
+```sh
+docker save amaas-eos-mw1.cec.lab.emc.com:5070/hellosally/email-alert:0.0.1 > email-alert.tar
+scp email-alert.tar <USER>@<AZURE_VM_IP>:~/
+
+# Inside Azure VM
+docker load < email-alert.tar
+```
+
+We can specify environment variables using a `.env` file. Prior to running the container, make a copy of `default.env` and edit the values accordingly. (See [Configuration](#configuration))
+```sh
+cp default.env .env
+
+# Run
+docker run --name email-alert-service -d --env-file .env amaas-eos-mw1.cec.lab.emc.com:5070/hellosally/email-alert:0.0.1
 ```
