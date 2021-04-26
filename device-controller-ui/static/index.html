@@ -14,7 +14,7 @@
 
         <center>
             <h2>Click submit to change Temperature range of device <br/> (Random-Temperature-Generator01):</h2>
-            <form action="/api/v1/submitRequest" method="POST" enctype="application/x-www-form-urlencoded">
+            <form id="form" action="/api/v1/submitRequest" method="POST" enctype="application/x-www-form-urlencoded">
                 <table>
                     <tr>
                         <td height=300px width=300px>
@@ -41,6 +41,16 @@
 
         <script>
             (function(){
+                $("#form").submit(function(event){
+                    $.post($(this).attr('action'), $(this).serialize())
+                    .done(function(msg){ 
+                        alert(msg)
+                     })
+                    .fail(function(xhr, status, error) {
+                        // error handling
+                    });
+                    return false;
+                });
             })();
         </script>
 
