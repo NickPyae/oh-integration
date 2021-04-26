@@ -71,5 +71,5 @@ We can specify environment variables using a `.env` file. Prior to running the c
 cp default.env .env
 
 # Run
-docker run --name email-alert-service -d --env-file .env amaas-eos-mw1.cec.lab.emc.com:5070/hellosally/email-alert:0.0.1
+docker run --name email-alert-service -d --env-file .env --restart unless-stopped amaas-eos-mw1.cec.lab.emc.com:5070/hellosally/email-alert:0.0.1
 ```
