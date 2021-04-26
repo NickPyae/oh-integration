@@ -30,3 +30,38 @@ You can pass `-v` flag to check which API hzn CLI is calling under the hood.
 ``` bash
 hzn node list -v
 ```
+
+## No agreement list after deployment 
+
+After you deploy your services either using pattern or policies, you run `hzn agreement list` to check the agreement between your agent and management hub. Agreement should be reached after 1 to 2 mins max. You should see something similar to this 
+
+``` bash
+{
+    "name": "Policy for dellsg/86ff099fb02549be4518518e650d8d3bdc6888a9 merged with dellsg/hellosally",
+    "current_agreement_id": "1e49ce3f1f1c156134c8eac8c74445bb8c2a78648d9f7b392deaefe0491dd463",
+    "consumer_id": "dellsg/agbot1",
+    "agreement_creation_time": "2021-04-26 13:06:15 +0000 UTC",
+    "agreement_accepted_time": "2021-04-26 13:06:26 +0000 UTC",
+    "agreement_finalized_time": "2021-04-26 13:06:26 +0000 UTC",
+    "agreement_execution_start_time": "",
+    "agreement_data_received_time": "",
+    "agreement_protocol": "Basic",
+    "workload_to_run": {
+      "url": "com.eos2git.cec.lab.emc.hellosally",
+      "org": "dellsg",
+      "version": "0.0.1",
+      "arch": "amd64"
+    }
+  }
+
+```
+
+If you see empty `[]` instead of above payload even after waiting for a few mins, what you should do is you should restart 
+`openhorizon/amd64_exchange-api` and `openhorizon/amd64_agbot` containers from management hub.
+
+
+``` bash
+docker restart CONTAINER_ID
+```
+
+Once you have done this, you can run `hzn unregister -D` on agent node and then `hzn register` and re-try your deployment either using pattern or policies.
