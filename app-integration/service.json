@@ -188,16 +188,6 @@
       "app-init": {
         "image": "amaas-eos-mw1.cec.lab.emc.com:5070/hellosally/app-init:0.0.1",
         "privileged": false
-      },
-      "hello-sally-web": {
-        "image": "amaas-eos-mw1.cec.lab.emc.com:5070/hellosally/hello-sally-web:0.0.1",
-        "privileged": true,
-        "ports": [
-          {
-            "HostPort": "8080:80/tcp",
-            "HostIP": "0.0.0.0"
-          }
-        ]
       }
     }
   },
