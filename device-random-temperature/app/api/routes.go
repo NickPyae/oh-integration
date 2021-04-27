@@ -151,6 +151,7 @@ func GetDeviceReadingsHandler(w http.ResponseWriter, r *http.Request) {
 		resp, err := client.Do(req)
 		if err != nil {
 			http.Error(w, "Error", http.StatusInternalServerError)
+			return
 		}
 		defer resp.Body.Close()
 
