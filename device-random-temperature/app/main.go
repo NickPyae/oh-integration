@@ -37,15 +37,13 @@ func main() {
 	helpers.CoreServicesBaseURL = "http://" + os.Getenv("CORE_SVCS_IP")
 	helpers.CoreDataPort = "48080"
 	helpers.CoreMetadataPort = "48081"
+	helpers.CoreCommandPort = "48082"
 	helpers.AddressablePort = "49989"
 	helpers.CoreDataURL = helpers.CoreServicesBaseURL + ":" + helpers.CoreDataPort
 	helpers.CoreMetadataURL = helpers.CoreServicesBaseURL + ":" + helpers.CoreMetadataPort
+	helpers.CoreCommandURL = helpers.CoreServicesBaseURL + ":" + helpers.CoreCommandPort
 
-	scripts.CreateAddressables()
-	scripts.CreateValueDescriptors()
-	scripts.UploadDeviceProfile()
-	scripts.CreateDeviceService()
-	scripts.CreateDevice()
+	initDevice()
 
 	addDeviceReadings()
 	api.SetRoutes()
@@ -62,8 +60,22 @@ func addDeviceReadings() {
 			case <-done:
 				return
 			case <-ticker.C:
-				api.AddDeviceReading()
+				success := api.AddDeviceReading()
+				if !success {
+					initDevice()
+				}
 			}
 		}
 	}()
+}
+
+func initDevice() {
+	// (blocking) ensure connection to core services
+	scripts.CheckConnection()
+
+	scripts.CreateAddressables()
+	scripts.CreateValueDescriptors()
+	scripts.UploadDeviceProfile()
+	scripts.CreateDeviceService()
+	scripts.CreateDevice()
 }
