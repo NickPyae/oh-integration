@@ -7,17 +7,17 @@ import (
 	"net/smtp"
 	"os"
 	"strconv"
-	"time"
 	"strings"
+	"time"
 
 	influxdb2 "github.com/influxdata/influxdb-client-go/v2"
 )
 
 // Default values
 const (
-	defaultSmtpPort = "587"
-	defaultInfluxBucket = "hello-sally-frk"
-	defaultQuerySeconds = 15
+	defaultSmtpPort       = "587"
+	defaultInfluxBucket   = "hello-sally-frk"
+	defaultQuerySeconds   = 15
 	defaultAlertThreshold = 1000.0
 )
 
@@ -106,7 +106,7 @@ func queryInflux(querySeconds int) {
 			|> filter(fn: (r) => r["_measurement"] == "hello-sally")
 			|> filter(fn: (r) => r["_field"] == "temperature")
 			|> filter(fn: (r) => r["_value"] >= %f)`,
-		influxBucket, querySeconds*2, alertThreshold)
+		influxBucket, querySeconds, alertThreshold)
 
 	// Query results
 	result, err := queryAPI.Query(context.Background(), query)
