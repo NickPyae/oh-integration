@@ -2,6 +2,7 @@ package scripts
 
 import (
 	"context"
+	"fmt"
 	"net/http"
 	"time"
 
@@ -49,6 +50,7 @@ func testMetadataConn() (ok bool) {
 	client := &http.Client{}
 	resp, err := client.Do(req)
 	if err != nil {
+		fmt.Println(err.Error())
 		return ok
 	}
 	defer resp.Body.Close()
@@ -77,6 +79,7 @@ func testCommandConn() (ok bool) {
 	client := &http.Client{}
 	resp, err := client.Do(req)
 	if err != nil {
+		fmt.Println(err.Error())
 		return ok
 	}
 	defer resp.Body.Close()
@@ -105,6 +108,7 @@ func testDataConn() (ok bool) {
 	client := &http.Client{}
 	resp, err := client.Do(req)
 	if err != nil {
+		fmt.Println(err.Error())
 		return ok
 	}
 	defer resp.Body.Close()

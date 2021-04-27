@@ -206,6 +206,7 @@ func AddDeviceReading() bool {
 	client := &http.Client{}
 	resp, err := client.Do(req)
 	if err != nil {
+		fmt.Println(err.Error())
 		return success
 	}
 	defer resp.Body.Close()
