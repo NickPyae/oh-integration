@@ -57,6 +57,7 @@ func getPutCommandUrl() (url string) {
 	client := &http.Client{}
 	resp, err := client.Do(req)
 	if err != nil {
+		fmt.Println(err.Error())
 		return url
 	}
 	defer resp.Body.Close()
@@ -85,6 +86,7 @@ func getPutCommandUrl() (url string) {
 			for j := range info.Commands {
 				command := info.Commands[j]
 				url = command.Put.Url
+				break
 			}
 		}
 	}
@@ -118,6 +120,7 @@ func executePutCommand(url string, form url.Values) (err error) {
 	client := &http.Client{}
 	resp, err := client.Do(req)
 	if err != nil {
+		fmt.Println(err.Error())
 		return err
 	}
 	defer resp.Body.Close()
