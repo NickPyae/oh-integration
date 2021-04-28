@@ -185,7 +185,9 @@ func GetDeviceReadingsHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func AddDeviceReading() {
+func AddDeviceReading() bool {
+	success := false
+
 	path := "/api/v1/event"
 
 	var jsonStr = []byte(`{
@@ -199,13 +201,17 @@ func AddDeviceReading() {
 	req, err := http.NewRequestWithContext(ctx, "POST", helpers.CoreDataURL+path, bytes.NewBuffer(jsonStr))
 	req.Header.Set("Content-Type", "application/json")
 	if err != nil {
-		return
+		return success
 	}
 
 	client := &http.Client{}
 	resp, err := client.Do(req)
 	if err != nil {
-		return
+		fmt.Println(err.Error())
+		return success
 	}
 	defer resp.Body.Close()
+
+	success = true
+	return success
 }
