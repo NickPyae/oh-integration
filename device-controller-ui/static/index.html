@@ -1,0 +1,58 @@
+<!-- Copyright 2021 Dell Inc, or its subsidiaries.
+     SPDX-License-Identifier: Apache-2.0 -->
+
+<!doctype html>
+<html lang="en">
+    <head>
+        <script src="jquery-3.6.0.min.js"></script>
+
+        <meta charset="utf-8">
+        <title>Demo app</title>
+    </head>
+
+    <body>
+
+        <center>
+            <h2>Click submit to change Temperature range of device <br/> (Random-Temperature-Generator01):</h2>
+            <form id="form" action="/api/v1/submitRequest" method="POST" enctype="application/x-www-form-urlencoded">
+                <table>
+                    <tr>
+                        <td height=300px width=300px>
+                            <p><b>Min Temperature (Fahrenheit)</b></p>
+                            <input type="number" name="minTemperature" value="1000" required min="-359" /><br />
+                        </td>
+                        <td height=300px width=300px>
+                            <p><b>Max Temperature (Fahrenheit)</b></p>
+                            <input type="number" name="maxTemperature" value="1000" required min="-359" /><br />
+                        </td>
+                        <td height=300px width=300px>
+                            <p><b>Duration (seconds)</b></p>
+                            <input type="number" name="duration" value="1" required min="1" /><br />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan=3>
+                            <input type="submit" value="submit" style="margin: auto; display: block;">
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </center>
+
+        <script>
+            (function(){
+                $("#form").submit(function(event){
+                    $.post($(this).attr('action'), $(this).serialize())
+                    .done(function(msg){ 
+                        alert(msg)
+                     })
+                    .fail(function(xhr, status, error) {
+                        // error handling
+                    });
+                    return false;
+                });
+            })();
+        </script>
+
+    </body>
+</html>
